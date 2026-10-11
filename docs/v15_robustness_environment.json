@@ -1,0 +1,19 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "versions": {
+    "numpy": "2.3.5",
+    "pybullet": "3.2.7",
+    "gymnasium": "1.2.3",
+    "pillow": "10.3.0",
+    "pybind11": "3.0.4",
+    "setuptools": "84.0.0"
+  },
+  "frozen_sources": {
+    "agents/search_cand_v15_shelf_clearance/agent.py": "623d48fae03cb3dae12cb6df9d33ea10597224de2b577302c73b0a5529ba5a61",
+    "agents/search_cand_v14_order_2716_diagnostic/agent.py": "ec91e56d49509de9aa4efc54b664e931e8147cf916736e75307d5a13f67e416e",
+    "configs/sample_config.json": "8225400e80927df2e18b6d4315ae26d3202c173cdda581022c7cf3fc9ee8a6f2",
+    "scripts/cpp_aabb_checker_v05/checker.cpp": "a73e77f80ecccad7a977baeeab62e678997e2079c377b5fe34ce3fd9367790d7"
+  },
+  "submission_method_ast_comparison": "GitHub v15 decision methods match Drive v15_submit; inherited methods differ only in checker loading."
+}
