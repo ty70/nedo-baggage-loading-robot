@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ground Handling Visualizer — 3D-BPP Layout Inspector</title>
+<style>
+:root{font-family:system-ui,'Meiryo',sans-serif;color:#17263d;background:#f1f5f9}*{box-sizing:border-box}body{max-width:1450px;margin:0 auto;padding:24px}h1{font-size:1.55rem;margin:0 0 8px}h2{font-size:1rem;margin:0 0 12px}.hint,.muted{color:#64748b;font-size:.88rem}.panel{background:#fff;border:1px solid #dbe3ed;border-radius:14px;padding:17px;margin:14px 0;box-shadow:0 2px 6px #18283b08}.controls{display:flex;align-items:end;gap:14px;flex-wrap:wrap}label{display:flex;flex-direction:column;gap:5px;font-weight:600;font-size:.86rem}input[type=file],select,input[type=range]{max-width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:7px;background:#fff}button{padding:9px 12px;background:#175cd3;color:white;border:0;border-radius:8px;cursor:pointer}button.secondary{background:#e9eff6;color:#183656}.summary{display:flex;flex-wrap:wrap;gap:12px}.metric{background:#f2f6fb;padding:12px;border-radius:9px;min-width:138px}.metric strong{display:block;font-size:1.3rem}.metric small{color:#64748b}.views{display:grid;grid-template-columns:repeat(auto-fit,minmax(370px,1fr));gap:14px}.viewer canvas{width:100%;height:auto;border:1px solid #dbe3ed;background:#fbfdff;border-radius:8px;cursor:crosshair}.viewer .muted{margin:8px 0 0}.note{border-left:4px solid #e3a23a;padding:10px;background:#fff8e8;font-size:.88rem}.error{color:#a22020}.tablewrap{overflow:auto;max-height:310px}table{border-collapse:collapse;width:100%;font-size:.84rem}td,th{padding:7px 8px;border-bottom:1px solid #e6ebf2;text-align:left;white-space:nowrap}tr{cursor:pointer}tr:hover,tr.sel{background:#e6f1ff}.legend{display:flex;gap:16px;flex-wrap:wrap;margin:8px 0}.swatch{display:inline-block;width:13px;height:13px;margin-right:5px;border-radius:3px;vertical-align:middle}@media(max-width:600px){body{padding:10px}.views{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<h1>Ground Handling Visualizer <span class="muted">/ v14 対応（回転補正済み）</span></h1>
+<p class="hint">3D-BPPの計画JSONや配置結果JSONをローカルで読み込み、上面(X-Y)、正面(X-Z)、側面(Y-Z)を表示します。サーバー不要・ファイル送信なし。</p>
+<div class="panel controls">
+<label>JSONファイル<input id="file" type="file" accept=".json,application/json"></label>
+<label>タスク<select id="task"></select></label>
+<label>コンテナ<select id="container"></select></label>
+<label>表示する配置<select id="layoutMode">
+<option value="geometric">幾何学的配置（搬入順序による除外前）</option>
+<option value="safe">搬入可能と判定した配置</option>
+</select></label>
+<label>高さの表示<select id="heightMode"><option value="all">全層（透過表示）</option><option value="slice">指定した高さを通る荷物だけ</option><option value="below">指定した高さ以下の荷物</option></select></label>
+<label>高さ Z <span id="zLabel">—</span><input id="z" type="range" min="0" max="150" value="0" step="1"></label>
+<button id="reset" class="secondary">選択解除</button>
+</div>
+<div class="panel" id="status">JSONを選択してください。</div>
+<div class="panel summary" id="summary" hidden></div>
+<div class="views">
+<section class="panel viewer"><h2>上面図（X–Y）</h2><canvas id="top" width="720" height="540"></canvas><p class="muted">上側が奥（+Y）、下側が搬入口（−Y）。重なる荷物は高さで透過表示します。</p></section>
+<section class="panel viewer"><h2>正面図（X–Z）</h2><canvas id="front" width="720" height="540"></canvas><p class="muted">横方向X、縦方向Z。積み重なりと天井余裕を確認できます。</p></section>
+<section class="panel viewer"><h2>側面図（Y–Z）</h2><canvas id="side" width="720" height="540"></canvas><p class="muted">左側が搬入口（−Y）、右側が奥（+Y）。奥の空間を確認できます。</p></section>
+</div>
+<div class="panel"><div class="legend"><span><i class="swatch" style="background:#5b8def"></i>通常</span><span><i class="swatch" style="background:#45a08b"></i>優先</span><span><i class="swatch" style="background:#a88ae6"></i>ソフト</span><span><i class="swatch" style="background:#f59e0b"></i>搬入可否で除外</span><span><i class="swatch" style="background:#ffbf47"></i>選択中</span></div><div id="detail">荷物をクリックすると位置・寸法を確認できます。</div></div>
+<div class="panel"><h2>荷物一覧</h2><div class="tablewrap"><table><thead><tr><th>ID</th><th>姿勢</th><th>位置（X, Y, Z）m</th><th>向き反映後寸法（X, Y, Z）m</th><th>支持</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
+<div class="panel note">注意：この画面は<strong>JSONに記録された配置の可視化</strong>です。BPPレイアウトJSONのlength/width/heightは回転後寸法のため再回転しません。PyBulletの実際の接触・変形・搬入経路の合否は判定しません。<code>bpp_layout_*.json</code> は旧版JSONは搬入可能性の絞り込み後の計画だけです。新しいagent.pyで再実行すると同じJSONにgeometric_placementsも保存され、幾何学的配置と搬入可能な配置を切り替えて表示できます。</div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+let tasks={},activeTask=null,activeContainer=null,items=[],selected=null,hitBoxes={top:[],front:[],side:[]};
+const fmt=(x,n=3)=>Number.isFinite(Number(x))?Number(x).toFixed(n):'—';
+function setStatus(text,err=false){$('status').textContent=text;$('status').className='panel'+(err?' error':'');}
+function orientDims(it){
+  // The layout dump writes ALREADY-ORIENTED dimensions.
+  // Do not apply `orientation` a second time.
+  return [Number(it.length), Number(it.width), Number(it.height)];
+}
+function normalize(root){if(root && root.placements && root.container_list)return {'000':root};if(root && Array.isArray(root))throw Error('配列形式のJSONは、配置とコンテナ定義が必要です。');const out={};for(const [k,v] of Object.entries(root||{})){if(v&&typeof v==='object'&&v.placements&&Array.isArray(v.container_list))out[k]=v;}if(!Object.keys(out).length)throw Error('placements と container_list を持つタスクが見つかりません。');return out;}
+function option(sel,value,label){let o=document.createElement('option');o.value=value;o.textContent=label;sel.appendChild(o);}
+$('file').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{tasks=normalize(JSON.parse(await file.text()));$('task').replaceChildren();Object.keys(tasks).sort().forEach(k=>option($('task'),k,k));activeTask=$('task').value;selected=null;loadTask();setStatus(`${file.name} を読み込みました。タスク数: ${Object.keys(tasks).length}`);}catch(err){tasks={};items=[];setStatus('読み込みエラー: '+err.message,true);render();}});
+$('task').addEventListener('change',()=>{activeTask=$('task').value;selected=null;loadTask();});
+$('container').addEventListener('change',()=>{activeContainer=$('container').value;selected=null;loadContainer();});
+$('layoutMode').addEventListener('change',()=>{selected=null;loadContainer();});
+$('heightMode').addEventListener('change',render);
+$('z').addEventListener('input',render);
+$('reset').addEventListener('click',()=>{selected=null;render();});
+function loadTask(){const data=tasks[activeTask];if(!data)return;const keys=new Set([...Object.keys(data.placements||{}),...data.container_list.map(c=>String(c.index))]);$('container').replaceChildren();[...keys].sort((a,b)=>Number(a)-Number(b)).forEach(k=>option($('container'),k,k));activeContainer=$('container').value;loadContainer();}
+function loadContainer(){const data=tasks[activeTask];const c=data?.container_list?.find(x=>String(x.index)===String(activeContainer));if(!c){items=[];render();setStatus('対象コンテナの定義が見つかりません',true);return;}const allGeom = data.geometric_placements;
+const wantsGeom=$('layoutMode').value==='geometric';
+if(!allGeom){$('layoutMode').value='safe';$('layoutMode').disabled=true;}
+else{$('layoutMode').disabled=false;}
+const source=(wantsGeom&&allGeom)?allGeom:data.placements;
+const list=source?.[activeContainer]||[];
+const safeIds=new Set(Object.values(data.placements||{}).flat().map(it=>Number(it.index)));
+items=list.map((it,i)=>{const p=it.local_pos||it.pos||[0,0,0];const center=c.center||[0,0,0];const pos=it.local_pos?[...p]:[Number(p[0])-Number(center[0]||0),Number(p[1]),Number(p[2])];return {...it,_key:i,_pos:pos,_dim:orientDims(it),_unreachable:!safeIds.has(Number(it.index))};});$('z').max=Math.ceil((Number(c.height)+Number(c.buffer||0))*100);$('z').value=0;render();}
+function color(it){return it._unreachable?'#f59e0b':it.is_prioritized?'#45a08b':it.is_soft?'#a88ae6':'#5b8def';}
+function passHeight(it){const z=Number($('z').value)/100, lo=it._pos[2]-it._dim[2]/2,hi=it._pos[2]+it._dim[2]/2;return $('heightMode').value==='all'||($('heightMode').value==='slice'?lo<=z&&z<=hi:lo<=z);}
+function render(){const data=tasks[activeTask],c=data?.container_list?.find(x=>String(x.index)===String(activeContainer));$('zLabel').textContent=fmt(Number($('z').value)/100,2)+' m';$('summary').hidden=!c;if(c){const ev=data.evaluation||{};const volume=items.reduce((s,it)=>s+it._dim[0]*it._dim[1]*it._dim[2],0);const pairs=[['表示した荷物',items.length+'個'],['荷物体積合計',fmt(volume,4)+' m³'],['搬入可能数',data.num_planned_items??'—'],['幾何学的配置数',data.num_geometric_items??'未保存'],['経路判定で除外',data.blocked_item_ids?.length??'未保存'],['充填スコア',ev.fill_score==null?'—':fmt(ev.fill_score,3)],['配置数比率',ev.num_placed_items==null?'—':fmt(ev.num_placed_items,3)]];$('summary').replaceChildren();for(const [a,b] of pairs){const v=document.createElement('div');v.className='metric';const sm=document.createElement('small'),st=document.createElement('strong');sm.textContent=a;st.textContent=b;v.append(sm,st);$('summary').appendChild(v);}}renderCanvas('top',c);renderCanvas('front',c);renderCanvas('side',c);renderTable();renderDetail();}
+function renderCanvas(id,c){const canvas=$(id),ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);hitBoxes[id]=[];if(!c){ctx.fillStyle='#64748b';ctx.font='20px sans-serif';ctx.fillText('JSONを読み込んでください',30,70);return;}
+const L=Number(c.length),W=Number(c.width),H=Number(c.height)+Number(c.buffer||0);
+let ax,ay,extentX,extentY,axisX,axisY;
+if(id==='top'){ax=0;ay=1;extentX=L;extentY=W;axisX='X';axisY='Y';}
+else if(id==='front'){ax=0;ay=2;extentX=L;extentY=H;axisX='X';axisY='Z';}
+else{ax=1;ay=2;extentX=W;extentY=H;axisX='Y';axisY='Z';}
+const pad=58,scale=Math.min((canvas.width-2*pad)/extentX,(canvas.height-2*pad)/extentY);const ox=(canvas.width-extentX*scale)/2,oy=(canvas.height-extentY*scale)/2;
+function toRect(it){const d=it._dim,p=it._pos;const minx=p[ax]-d[ax]/2+(ax===2?0:extentX/2);const miny=p[ay]-d[ay]/2+(ay===2?0:extentY/2);return [ox+minx*scale,oy+(extentY-miny-d[ay])*scale,d[ax]*scale,d[ay]*scale];}
+ctx.fillStyle='#f8fafc';ctx.fillRect(ox,oy,extentX*scale,extentY*scale);ctx.strokeStyle='#334155';ctx.lineWidth=2;ctx.strokeRect(ox,oy,extentX*scale,extentY*scale);
+ctx.strokeStyle='#e4eaf2';ctx.lineWidth=1;for(let j=1;j<5;j++){let x=ox+extentX*scale*j/5,y=oy+extentY*scale*j/5;ctx.beginPath();ctx.moveTo(x,oy);ctx.lineTo(x,oy+extentY*scale);ctx.moveTo(ox,y);ctx.lineTo(ox+extentX*scale,y);ctx.stroke();}
+const visible=items.filter(passHeight).sort((a,b)=>a._pos[2]-b._pos[2]);for(const it of visible){const [x,y,w,h]=toRect(it);ctx.globalAlpha=selected===it._key?.92:($('heightMode').value==='all'&&id==='top'?.43:.66);ctx.fillStyle=selected===it._key?'#ffbf47':color(it);ctx.fillRect(x,y,w,h);ctx.globalAlpha=1;ctx.strokeStyle=selected===it._key?'#9a5b02':'#334155';ctx.lineWidth=selected===it._key?3:1.5;ctx.strokeRect(x,y,w,h);if(w>20&&h>17){ctx.fillStyle='#14243a';ctx.font='bold 13px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(it.index??it._key),x+w/2,y+h/2);}hitBoxes[id].push({it,x,y,w,h});}
+ctx.font='14px sans-serif';ctx.textAlign='center';ctx.textBaseline='alphabetic';ctx.fillStyle='#34465f';ctx.fillText(axisX+' →',canvas.width/2,canvas.height-12);ctx.save();ctx.translate(16,canvas.height/2);ctx.rotate(-Math.PI/2);ctx.fillText(axisY+' ↑',0,0);ctx.restore();if(id==='top'){ctx.textAlign='left';ctx.fillText('奥 +Y',ox+7,oy-12);ctx.fillText('搬入口 −Y',ox+7,oy+extentY*scale+20);}if(id==='side'){ctx.textAlign='left';ctx.fillText('入口 −Y',ox,oy+extentY*scale+25);ctx.textAlign='right';ctx.fillText('奥 +Y',ox+extentX*scale,oy+extentY*scale+25);}
+}
+for(const id of ['top','front','side'])$(id).addEventListener('click',e=>{const canvas=$(id),r=canvas.getBoundingClientRect(),x=(e.clientX-r.left)*canvas.width/r.width,y=(e.clientY-r.top)*canvas.height/r.height;const found=[...hitBoxes[id]].reverse().find(q=>x>=q.x&&x<=q.x+q.w&&y>=q.y&&y<=q.y+q.h);selected=found?found.it._key:null;render();});
+function renderTable(){$('tbody').replaceChildren();for(const it of [...items].sort((a,b)=>Number(a.index)-Number(b.index))){const tr=document.createElement('tr');if(selected===it._key)tr.className='sel';let vals=[it.index??'—',it.orientation??0,it._pos.map(x=>fmt(x)).join(', '),it._dim.map(x=>fmt(x)).join(' × '),(it.support_kind||'—')+(it._unreachable?' / 搬入除外':'')];for(const s of vals){let td=document.createElement('td');td.textContent=s;tr.appendChild(td);}tr.addEventListener('click',()=>{selected=it._key;render();});$('tbody').appendChild(tr);}}
+function renderDetail(){const it=items.find(i=>i._key===selected);$('detail').textContent=it?`荷物 ${it.index} ／ orientation=${it.orientation??0} ／ 座標 [${it._pos.map(x=>fmt(x)).join(', ')}] m ／ 回転後サイズ [${it._dim.map(x=>fmt(x)).join(', ')}] m ／ support=${it.support_kind||'不明'} ／ plan_rank=${it.plan_rank??'—'} ／ ${it._unreachable?'搬入可能性で除外':'搬入可能と判定'}`:'荷物をクリックすると位置・寸法を確認できます。';}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+{
+    "container_list": [
+        {
+            "index": 0,
+            "length": 1.0,
+            "width": 1.0,
+            "height": 0.5,
+            "thickness": 0.02,
+            "buffer": 0.0,
+            "cut_x": 0.0,
+            "cut_y": 0.0,
+            "offset_x": 0.0,
+            "offset_y": 0.0,
+            "offset_z": 0.0,
+            "mass_limit": 100.0
+        }
+    ],
+    "item_stream": [
+        {
+            "index": 0,
+            "length": 0.1,
+            "width": 0.1,
+            "height": 0.1,
+            "mass": 0.1,
+            "soft": false,
+            "priority": false
+        },
+        {
+            "index": 1,
+            "length": 0.15,
+            "width": 0.1,
+            "height": 0.1,
+            "mass": 0.2,
+            "soft": false,
+            "priority": false
+        },
+        {
+            "index": 2,
+            "length": 0.2,
+            "width": 0.15,
+            "height": 0.1,
+            "mass": 0.3,
+            "soft": false,
+            "priority": false
+        },
+        {
+            "index": 3,
+            "length": 0.1,
+            "width": 0.2,
+            "height": 0.15,
+            "mass": 0.15,
+            "soft": false,
+            "priority": false
+        },
+        {
+            "index": 4,
+            "length": 0.12,
+            "width": 0.12,
+            "height": 0.12,
+            "mass": 0.18,
+            "soft": false,
+            "priority": false
+        }
+    ],
+    "camera": {
+        "width": 640,
+        "height": 480,
+        "position": [1.5, 1.5, 1.5],
+        "target": [0.0, 0.0, 0.0]
+    },
+    "validator": {
+        "start_z": 0.0,
+        "ceiling_margin": 0.01,
+        "wall_margin": 0.01
+    },
+    "action_limits": {
+        "xy_granularity": 0.005,
+        "z_granularity": 0.005,
+        "rotate_limits": [0, 0, 0]
+    },
+    "timeout": 30,
+    "viz": {
+        "show_guidelines": true,
+        "show_trajectories": true,
+        "show_collision_points": false
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "000": {
+        "evaluation": null,
+        "message": "Traceback (most recent call last):\n  File \"/home/ty70/simulator/src/ground_handling/app.py\", line 56, in run\n    runner.call('get_init_states', time_out_sec = task_config['agent']['init_timeout'], fallback = None, init_states = init_states)\n  File \"/home/ty70/simulator/src/ground_handling/runner.py\", line 117, in call\n    status, payload = self.parent_conn.recv()\n                      ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ty70/.local/share/uv/python/cpython-3.12.8-linux-x86_64-gnu/lib/python3.12/multiprocessing/connection.py\", line 250, in recv\n    buf = self._recv_bytes()\n          ^^^^^^^^^^^^^^^^^^\n  File \"/home/ty70/.local/share/uv/python/cpython-3.12.8-linux-x86_64-gnu/lib/python3.12/multiprocessing/connection.py\", line 430, in _recv_bytes\n    buf = self._recv(4)\n          ^^^^^^^^^^^^^\n  File \"/home/ty70/.local/share/uv/python/cpython-3.12.8-linux-x86_64-gnu/lib/python3.12/multiprocessing/connection.py\", line 395, in _recv\n    chunk = read(handle, remaining)\n            ^^^^^^^^^^^^^^^^^^^^^^^\nConnectionResetError: [Errno 104] Connection reset by peer\n",
+        "status": "format_error"
+    }
+}

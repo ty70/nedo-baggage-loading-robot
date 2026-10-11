@@ -1,0 +1,708 @@
+import math
+import os
+import sys
+from pathlib import Path
+import numpy as np
+
+
+class Agent:
+    """extreme_point_v01: first independent Extreme-Point 3D-BPP agent.
+
+    Design goals for v01:
+      - independent from safe_grid_* strategy code
+      - generate geometric candidate points from floor/shelves/packed items
+      - evaluate all 6 axis-aligned orientations
+      - use the custom C++ checker for final AABB + transport feasibility
+      - keep a small, explicit heuristic score rather than hard-coded grid scans
+
+    EP convention:
+      Each EP is (x_edge, y_edge, z_bottom) where x_edge/y_edge are the
+      positive-X / positive-Y outer faces of a candidate.  A box with dimensions
+      (L,W,H) is placed at:
+          center = (x_edge-L/2, y_edge-W/2, z_bottom+H/2)
+      This makes the natural fill order back(+Y)->front(-Y), right(+X)->left(-X).
+    """
+
+    def __init__(self, module_path: str):
+        self.module_path = module_path
+
+        # Geometry / validator-aligned margins.
+        self.safety_margin = 0.015
+        self.extra_gap = 0.005
+        self.xy_gap = self.safety_margin + self.extra_gap   # collision clearance = 0.020 m
+        self.ep_gap = 0.040  # spacing used only when spawning left/front EPs
+        self.z_gap = 0.003
+        self.start_margin = 0.01
+        self.boundary_margin = 0.015
+
+        # EP controls.
+        self.ep_quant = 0.002      # 2 mm de-duplication cell
+        self.max_eps_per_container = 400
+        self.max_candidates = 6000
+        self.min_support_ratio = 0.90
+        self.support_z_tolerance = 0.035
+        self.weight_tolerance = 0.05
+
+        # State.
+        self.optimize_enabled = False
+        self.lookahead_k = 1
+        self.container_init = []
+        self.placed_orientation = {}
+        self.soft_item_ids = set()
+        self.global_max_mass = None
+        self.step_no = 0
+
+        # C++ checker.  Keep a dedicated env var so this agent does not depend
+        # on SAFE_GRID_CPP_MODE naming.
+        self.cpp_mode = os.environ.get('EP_CPP_MODE', 'cpp').strip().lower()
+        self.cpp_checker = None
+        self.cpp_checker_path = None
+        self.cpp_stats = {
+            'final_cpp': 0,
+            'path_cpp': 0,
+            'python_fallback_final': 0,
+            'python_fallback_path': 0,
+            'generated_eps': 0,
+            'tested_candidates': 0,
+            'feasible_candidates': 0,
+        }
+        self._load_cpp_checker(module_path)
+
+    # ------------------------------------------------------------------
+    # Simulator API
+    # ------------------------------------------------------------------
+    def get_init_states(self, init_states: dict):
+        self.optimize_enabled = bool(init_states.get('optimize', False))
+        self.lookahead_k = int(init_states.get('lookahead_k', 1))
+        self.container_init = init_states.get('container_list', [])
+        self.placed_orientation = {}
+        self.soft_item_ids = set()
+        self.global_max_mass = None
+        self.step_no = 0
+        for k in self.cpp_stats:
+            self.cpp_stats[k] = 0
+        print(
+            f'[extreme_point_v01][init] boundary_margin={self.boundary_margin:.3f} '
+            f'xy_gap={self.xy_gap:.3f} ep_gap={self.ep_gap:.3f} cpp_mode={self.cpp_mode}'
+        )
+        return True
+
+    def optimize(self, item_list: list):
+        """Keep a conservative cargo order while EP handles geometry.
+
+        Hard/non-priority first, then hard/priority, then soft cargo.  Inside a
+        category, heavier items come first to keep mass low.  This is deliberately
+        simple in v01; item ordering and EP scoring are separated concerns.
+        """
+        masses = [float(it.get('mass', 0.0)) for it in item_list]
+        self.global_max_mass = max(masses) if masses else None
+        for it in item_list:
+            if bool(it.get('is_soft', False)):
+                self.soft_item_ids.add(int(it['index']))
+
+        def category(it):
+            soft = bool(it.get('is_soft', False))
+            pri = bool(it.get('is_prioritized', False))
+            if not soft and not pri:
+                return 0
+            if not soft and pri:
+                return 1
+            if soft and not pri:
+                return 2
+            return 3
+
+        ordered = sorted(
+            item_list,
+            key=lambda it: (
+                category(it),
+                -float(it.get('mass', 0.0)),
+                -(float(it['length']) * float(it['width'])),
+                -float(it['height']),
+                int(it['index']),
+            ),
+        )
+        return [int(it['index']) for it in ordered]
+
+    def policy(self, observation: dict):
+        pool = observation.get('pool_list', [])
+        containers = observation.get('container_list', [])
+        if not pool or not containers:
+            return self._fallback()
+
+        self.step_no += 1
+        for it in pool:
+            if bool(it.get('is_soft', False)) and it.get('index') is not None:
+                self.soft_item_ids.add(int(it['index']))
+
+        candidates = []
+        tested = 0
+        total_eps = 0
+
+        for cidx, c in enumerate(containers):
+            packed = self._oriented_packed(c.get('packed_items', []))
+            eps = self._generate_extreme_points(c, packed)
+            total_eps += len(eps)
+
+            # Consider the full visible pool.  The simulator already controls
+            # the look-ahead size, so no extra truncation is needed here.
+            for pidx, raw_item in enumerate(pool):
+                for item in self._oriented_variants(raw_item):
+                    for ep in eps:
+                        tested += 1
+                        if tested > self.max_candidates:
+                            break
+
+                        cand = self._center_from_ep(ep, item)
+                        if not self._inside_container(c, item, cand):
+                            continue
+                        if self._intersects_shelf_plate(c, item, cand):
+                            continue
+
+                        support = self._support_info(c, item, cand, packed)
+                        if not support['ok']:
+                            continue
+
+                        if not self._final_clear(c, item, cand, packed, support_obj=support.get('support_obj')):
+                            continue
+                        if not self._path_clear(c, item, cand, packed):
+                            continue
+
+                        score = self._score_candidate(c, raw_item, item, cand, ep, support, packed)
+                        candidates.append((score, cidx, pidx, cand, item, ep, support))
+
+                    if tested > self.max_candidates:
+                        break
+                if tested > self.max_candidates:
+                    break
+            if tested > self.max_candidates:
+                break
+
+        self.cpp_stats['generated_eps'] += total_eps
+        self.cpp_stats['tested_candidates'] += tested
+        self.cpp_stats['feasible_candidates'] += len(candidates)
+
+        if not candidates:
+            print(
+                f'[extreme_point_v01] step={self.step_no} NO-FEASIBLE-CANDIDATE '
+                f'eps={total_eps} tested={tested}'
+            )
+            return self._fallback(containers[0], pool[0])
+
+        # Lower score is better.  Keep deterministic tie-breaking.
+        candidates.sort(key=lambda q: (
+            q[0],
+            int(q[4].get('_orientation', 0)),
+            int(q[4].get('index', -1)),
+            q[1], q[2],
+        ))
+        score, cidx, pidx, pos, item, ep, support = candidates[0]
+
+        item_id = item.get('index')
+        ori = int(item['_orientation'])
+        if item_id is not None:
+            self.placed_orientation[int(item_id)] = ori
+
+        print(
+            f'[extreme_point_v01] step={self.step_no} item={item_id} pool_idx={pidx} '
+            f'ori={ori} dims=({item["length"]:.3f},{item["width"]:.3f},{item["height"]:.3f}) '
+            f'target=({pos[0]:.3f},{pos[1]:.3f},{pos[2]:.3f}) '
+            f'ep=({ep[0]:.3f},{ep[1]:.3f},{ep[2]:.3f},{ep[3] if len(ep)>=4 else "?"}) '
+            f'support={support["kind"]} ratio={support["ratio"]:.3f} '
+            f'score={score:.5f} eps={total_eps} tested={tested} feasible={len(candidates)}'
+        )
+
+        return {
+            'item_idx': int(pidx),
+            'container_idx': int(cidx),
+            'place_pos': np.asarray(pos, dtype=np.float32),
+            'orientation': ori,
+        }
+
+    # ------------------------------------------------------------------
+    # Orientation / packed geometry
+    # ------------------------------------------------------------------
+    def _orientation_dims(self, item, orientation):
+        L = float(item['length'])
+        W = float(item['width'])
+        H = float(item['height'])
+        return {
+            0: (L, W, H),
+            1: (L, H, W),
+            2: (H, W, L),
+            3: (W, L, H),
+            4: (W, H, L),
+            5: (H, L, W),
+        }[int(orientation)]
+
+    def _oriented_variants(self, item):
+        out = []
+        seen = set()
+        for ori in range(6):
+            L, W, H = self._orientation_dims(item, ori)
+            key = (round(L, 6), round(W, 6), round(H, 6))
+            if key in seen:
+                continue
+            seen.add(key)
+            v = dict(item)
+            v['length'], v['width'], v['height'] = L, W, H
+            v['_orientation'] = ori
+            out.append(v)
+        # Low orientation first is only a deterministic enumeration order; the
+        # final choice is made by the score function.
+        out.sort(key=lambda v: (
+            float(v['height']),
+            -(float(v['length']) * float(v['width'])),
+            int(v['_orientation']),
+        ))
+        return out
+
+    def _oriented_packed(self, packed):
+        out = []
+        for obj in packed:
+            v = dict(obj)
+            idx = v.get('index')
+            ori = self.placed_orientation.get(int(idx), 0) if idx is not None else 0
+            L, W, H = self._orientation_dims(v, ori)
+            v['length'], v['width'], v['height'] = L, W, H
+            v['_orientation'] = ori
+            out.append(v)
+        return out
+
+    # ------------------------------------------------------------------
+    # Extreme Points
+    # ------------------------------------------------------------------
+    def _generate_extreme_points(self, c, packed):
+        """Generate mirrored EPs: floor/shelf seeds + left/front/top of boxes.
+
+        v01 intentionally keeps the generator compact.  Projected extreme points
+        and dominance pruning beyond de-duplication are reserved for v02.
+        """
+        L, W, H = float(c['length']), float(c['width']), float(c['height'])
+        t = float(c.get('thickness', 0.04))
+        xmax = L/2 - t - self.boundary_margin
+        ymax = W/2 - t - self.boundary_margin
+        floor_z = t + self.boundary_margin
+
+        raw = [(xmax, ymax, floor_z, 'floor-seed')]
+
+        # Small shelf is always present in this simulator family.
+        cut_x = float(c.get('cut_x', 0.0))
+        buffer = float(c.get('buffer', 0.0))
+        if cut_x > 0.0:
+            ss_xmax = -L/2 + t + cut_x
+            ss_ymax = W/2 - t
+            ss_top = H/2 + buffer + t
+            raw.append((ss_xmax - self.boundary_margin, ss_ymax - self.boundary_margin, ss_top + self.z_gap, 'small-shelf-seed'))
+
+        # Optional main shelf, back half.
+        if bool(c.get('shelf', c.get('require_shelf', False))):
+            ms_xmax = (L - t) / 2.0
+            ms_ymax = W/2 - t
+            ms_top = H/2 + buffer + t
+            raw.append((ms_xmax - self.boundary_margin, ms_ymax - self.boundary_margin, ms_top + self.z_gap, 'main-shelf-seed'))
+
+        # Every packed item contributes three mirrored EPs.
+        for obj in packed:
+            if obj.get('pos') is None:
+                continue
+            ox, oy, oz = self._local_pos(c, obj['pos'])
+            hx = float(obj['length']) / 2.0
+            hy = float(obj['width']) / 2.0
+            hz = float(obj['height']) / 2.0
+            xmin, xmax_o = ox - hx, ox + hx
+            ymin, ymax_o = oy - hy, oy + hy
+            zmin, zmax_o = oz - hz, oz + hz
+
+            # New box immediately to the left / in front / above this box.
+            raw.append((xmin - self.ep_gap, ymax_o, zmin, f'left:{obj.get("index",-1)}'))
+            raw.append((xmax_o, ymin - self.ep_gap, zmin, f'front:{obj.get("index",-1)}'))
+            raw.append((xmax_o, ymax_o, zmax_o + self.z_gap, f'top:{obj.get("index",-1)}'))
+
+        # Quantized de-duplication.  Prefer lower z, then deeper y, then right x.
+        dedup = {}
+        for x, y, z, source in raw:
+            key = (
+                int(round(x / self.ep_quant)),
+                int(round(y / self.ep_quant)),
+                int(round(z / self.ep_quant)),
+            )
+            old = dedup.get(key)
+            ep = (float(x), float(y), float(z), source)
+            if old is None or (z, -y, -x) < (old[2], -old[1], -old[0]):
+                dedup[key] = ep
+
+        eps = list(dedup.values())
+        eps.sort(key=lambda e: (e[2], -e[1], -e[0], e[3]))
+        eps = eps[:self.max_eps_per_container]
+        return eps
+
+    def _center_from_ep(self, ep, item):
+        x_edge, y_edge, z_bottom = ep[:3]
+        return (
+            float(x_edge) - float(item['length']) / 2.0,
+            float(y_edge) - float(item['width']) / 2.0,
+            float(z_bottom) + float(item['height']) / 2.0,
+        )
+
+    # ------------------------------------------------------------------
+    # Feasibility
+    # ------------------------------------------------------------------
+    def _inside_container(self, c, item, cand):
+        L, W, H = float(c['length']), float(c['width']), float(c['height'])
+        t = float(c.get('thickness', 0.04))
+        x, y, z = map(float, cand)
+        hx = float(item['length']) / 2.0
+        hy = float(item['width']) / 2.0
+        hz = float(item['height']) / 2.0
+        m = self.boundary_margin
+        return (
+            x - hx >= -L/2 + t + m and
+            x + hx <=  L/2 - t - m and
+            y - hy >= -W/2 + t + m and
+            y + hy <=  W/2 - t - m and
+            z - hz >= t and
+            z + hz <= H - t - 0.01
+        )
+
+    def _support_info(self, c, item, cand, packed):
+        """Require floor, shelf, or one-box support for every candidate."""
+        x, y, z = map(float, cand)
+        hx = float(item['length'])/2.0
+        hy = float(item['width'])/2.0
+        hz = float(item['height'])/2.0
+        bottom = z - hz
+        footprint = max(1e-12, 4.0 * hx * hy)
+
+        L, W, H = float(c['length']), float(c['width']), float(c['height'])
+        t = float(c.get('thickness', 0.04))
+        buffer = float(c.get('buffer', 0.0))
+
+        if abs(bottom - t) <= self.support_z_tolerance:
+            return {'ok': True, 'kind': 'floor', 'ratio': 1.0, 'support_obj': None}
+
+        # Small shelf support: narrow X strip, almost full Y depth.
+        cut_x = float(c.get('cut_x', 0.0))
+        shelf_top = H/2 + buffer + t
+        if cut_x > 0 and abs(bottom - shelf_top) <= self.support_z_tolerance:
+            sx0 = -L/2 + t
+            sx1 = sx0 + cut_x
+            sy0 = -W/2 + t
+            sy1 = W/2 - t
+            ratio = self._rect_overlap_ratio(x-hx, x+hx, y-hy, y+hy, sx0, sx1, sy0, sy1)
+            # Outer wall side cannot overhang; retain a small inward clearance.
+            outer_ok = (x-hx) >= sx0 + self.boundary_margin
+            if outer_ok and ratio >= self.min_support_ratio:
+                return {'ok': True, 'kind': 'small-shelf', 'ratio': ratio, 'support_obj': None}
+
+        # Main shelf support: back half.
+        if bool(c.get('shelf', c.get('require_shelf', False))) and abs(bottom - shelf_top) <= self.support_z_tolerance:
+            ms_lx = L - t
+            ms_ly = W/2 - 2*t
+            sx0, sx1 = -ms_lx/2, ms_lx/2
+            cy = W/4
+            sy0, sy1 = cy - ms_ly/2, cy + ms_ly/2
+            ratio = self._rect_overlap_ratio(x-hx, x+hx, y-hy, y+hy, sx0, sx1, sy0, sy1)
+            if ratio >= self.min_support_ratio:
+                return {'ok': True, 'kind': 'main-shelf', 'ratio': ratio, 'support_obj': None}
+
+        # Single-box support.  v01 intentionally avoids multi-support unions.
+        upper_mass = float(item.get('mass', 0.0))
+        best = None
+        for obj in packed:
+            if obj.get('pos') is None:
+                continue
+            ox, oy, oz = self._local_pos(c, obj['pos'])
+            ohx = float(obj['length'])/2.0
+            ohy = float(obj['width'])/2.0
+            ohz = float(obj['height'])/2.0
+            top = oz + ohz
+            if abs(bottom - top) > self.support_z_tolerance:
+                continue
+            ratio = self._rect_overlap_ratio(
+                x-hx, x+hx, y-hy, y+hy,
+                ox-ohx, ox+ohx, oy-ohy, oy+ohy,
+            )
+            if ratio < self.min_support_ratio:
+                continue
+            support_mass = float(obj.get('mass', 0.0))
+            if upper_mass > 0 and support_mass > 0 and upper_mass > support_mass + self.weight_tolerance:
+                continue
+            if bool(obj.get('is_soft', False)) and not bool(item.get('is_soft', False)):
+                continue
+            rank = (-ratio, top)
+            if best is None or rank < best[0]:
+                best = (rank, obj, ratio)
+        if best is not None:
+            return {'ok': True, 'kind': 'box', 'ratio': best[2], 'support_obj': best[1]}
+
+        return {'ok': False, 'kind': 'none', 'ratio': 0.0, 'support_obj': None}
+
+    @staticmethod
+    def _rect_overlap_ratio(ax0, ax1, ay0, ay1, bx0, bx1, by0, by1):
+        ox = max(0.0, min(ax1, bx1) - max(ax0, bx0))
+        oy = max(0.0, min(ay1, by1) - max(ay0, by0))
+        area = max(1e-12, (ax1-ax0) * (ay1-ay0))
+        return (ox * oy) / area
+
+    def _intersects_shelf_plate(self, c, item, cand):
+        """Reject final poses crossing through shelf plates themselves."""
+        x, y, z = map(float, cand)
+        hx, hy, hz = float(item['length'])/2, float(item['width'])/2, float(item['height'])/2
+        L, W, H = float(c['length']), float(c['width']), float(c['height'])
+        t = float(c.get('thickness', 0.04))
+        buffer = float(c.get('buffer', 0.0))
+        shelf_cz = H/2 + buffer + t/2
+
+        def overlap_box(cx, cy, cz, lx, ly, lz):
+            return (
+                abs(x-cx) < hx + lx/2 and
+                abs(y-cy) < hy + ly/2 and
+                abs(z-cz) < hz + lz/2 - 1e-9
+            )
+
+        cut_x = float(c.get('cut_x', 0.0))
+        if cut_x > 0:
+            cx = -L/2 + t + cut_x/2
+            if overlap_box(cx, 0.0, shelf_cz, cut_x, W-2*t, t):
+                return True
+
+        if bool(c.get('shelf', c.get('require_shelf', False))):
+            if overlap_box(0.0, W/4, shelf_cz, L-t, W/2-2*t, t):
+                return True
+        return False
+
+    # ------------------------------------------------------------------
+    # Candidate scoring
+    # ------------------------------------------------------------------
+    def _score_candidate(self, c, raw_item, item, cand, ep, support, packed):
+        """Lower is better.  v01 uses only transparent hand-tuned terms."""
+        L, W, H = float(c['length']), float(c['width']), float(c['height'])
+        x, y, z = map(float, cand)
+        mass = float(raw_item.get('mass', 0.0))
+        max_mass = self.global_max_mass if self.global_max_mass not in (None, 0.0) else max(mass, 1.0)
+
+        # Normalize to approximately [0,1].
+        height_n = z / max(H, 1e-9)
+        front_n = (W/2 - y) / max(W, 1e-9)      # 0 at back, 1 at front
+        left_n = (L/2 - x) / max(L, 1e-9)       # 0 at right, 1 at left
+        mass_n = mass / max(max_mass, 1e-9)
+
+        # EP source matters for transportability.  With this simulator's Y->X
+        # insertion path, filling a new front row too early places the next item
+        # directly behind an already packed item.  Prefer lateral expansion
+        # (left:*) first, and defer front:* EPs until later.
+        source = ep[3] if len(ep) >= 4 else 'unknown'
+        source_penalty = 0.0
+        if source.startswith('left:'):
+            source_penalty = -4.0
+        elif source.startswith('front:'):
+            # Very strong early penalty; it fades after several placements.
+            source_penalty = 12.0 if self.step_no <= 10 else 4.0
+        elif source.startswith('top:'):
+            source_penalty = 2.0
+
+        # Strongly penalize front occupation so the entry region stays free.
+        entrance_penalty = max(0.0, (-y) / max(W/2, 1e-9))
+
+        # Heavy cargo is more strongly rewarded for low Z.
+        cog_term = height_n * (1.0 + 1.5 * mass_n)
+
+        support_bonus = support['ratio']
+        soft_penalty = 0.35 if bool(raw_item.get('is_soft', False)) and support['kind'] != 'box' else 0.0
+
+        score = (
+            3.0 * cog_term +
+            2.5 * front_n +
+            0.25 * left_n +
+            3.0 * entrance_penalty -
+            1.5 * support_bonus +
+            soft_penalty +
+            source_penalty
+        )
+        return float(score)
+
+    # ------------------------------------------------------------------
+    # C++ checker integration
+    # ------------------------------------------------------------------
+    def _load_cpp_checker(self, module_path):
+        if self.cpp_mode == 'off':
+            print('[extreme_point_v01][cpp] mode=off')
+            return
+
+        candidates = []
+        try:
+            mp = Path(module_path).expanduser().resolve()
+            project = mp.parent.parent if mp.name.startswith('extreme_point_') else mp
+            candidates += [
+                project / 'scripts' / 'cpp_aabb_checker_v05',
+                project / 'scripts' / 'cpp_aabb_checker_v5',
+            ]
+        except Exception:
+            pass
+        cwd = Path.cwd().resolve()
+        for base in (cwd, cwd.parent):
+            candidates += [
+                base / 'scripts' / 'cpp_aabb_checker_v05',
+                base / 'scripts' / 'cpp_aabb_checker_v5',
+            ]
+
+        seen = set()
+        last_error = None
+        for p in candidates:
+            ps = str(p)
+            if ps in seen or not p.is_dir():
+                continue
+            seen.add(ps)
+            try:
+                if ps not in sys.path:
+                    sys.path.insert(0, ps)
+                import cpp_aabb_checker as checker
+                if not hasattr(checker, 'aabb_overlap_python_order'):
+                    raise RuntimeError(f'{p} lacks v05 final-overlap API')
+                self.cpp_checker = checker
+                self.cpp_checker_path = ps
+                print(f'[extreme_point_v01][cpp] loaded mode={self.cpp_mode} path={p}')
+                return
+            except Exception as exc:
+                last_error = exc
+                sys.modules.pop('cpp_aabb_checker', None)
+
+        if last_error is None:
+            print('[extreme_point_v01][cpp] v05 checker not found; Python fallback')
+        else:
+            print(f'[extreme_point_v01][cpp] import failed: {last_error!r}; Python fallback')
+
+    def _cpp_box(self, item, pos=(0.0, 0.0, 0.0), box_id=None):
+        b = self.cpp_checker.Box()
+        idx = item.get('index', -1) if box_id is None else box_id
+        b.id = int(-1 if idx is None else idx)
+        b.cx, b.cy, b.cz = map(float, pos)
+        b.lx = float(item['length'])
+        b.ly = float(item['width'])
+        b.lz = float(item['height'])
+        b.mass = float(item.get('mass', 0.0))
+        b.is_soft = bool(item.get('is_soft', False))
+        return b
+
+    def _cpp_container_bounds(self, c):
+        L, W, H = float(c['length']), float(c['width']), float(c['height'])
+        t = float(c.get('thickness', 0.04))
+        return self.cpp_checker.ContainerBounds(
+            -L/2 + t, L/2 - t,
+            -W/2 + t, W/2 - t,
+            t, H - t,
+        )
+
+    def _cpp_packed_boxes(self, c, packed, skip_obj=None):
+        boxes = []
+        for obj in packed:
+            if obj.get('pos') is None or (skip_obj is not None and obj is skip_obj):
+                continue
+            boxes.append(self._cpp_box(obj, self._local_pos(c, obj['pos'])))
+        return boxes
+
+    def _final_clear(self, c, item, cand, packed, support_obj=None):
+        if self.cpp_checker is not None and self.cpp_mode != 'off':
+            moving = self._cpp_box(item, cand)
+            fn = self.cpp_checker.aabb_overlap_python_order
+            for other in self._cpp_packed_boxes(c, packed, skip_obj=support_obj):
+                if bool(fn(moving, other, float(self.xy_gap), float(self.z_gap))):
+                    self.cpp_stats['final_cpp'] += 1
+                    return False
+            self.cpp_stats['final_cpp'] += 1
+            return True
+
+        self.cpp_stats['python_fallback_final'] += 1
+        x, y, z = map(float, cand)
+        hx, hy, hz = float(item['length'])/2, float(item['width'])/2, float(item['height'])/2
+        for obj in packed:
+            if obj.get('pos') is None or (support_obj is not None and obj is support_obj):
+                continue
+            ox, oy, oz = self._local_pos(c, obj['pos'])
+            ohx, ohy, ohz = float(obj['length'])/2, float(obj['width'])/2, float(obj['height'])/2
+            if (
+                abs(x-ox) < hx+ohx+self.xy_gap and
+                abs(y-oy) < hy+ohy+self.xy_gap and
+                abs(z-oz) < hz+ohz+self.z_gap
+            ):
+                return False
+        return True
+
+    def _path_clear(self, c, item, target, packed):
+        if self.cpp_checker is not None and self.cpp_mode != 'off':
+            moving = self._cpp_box(item, (0.0, 0.0, 0.0))
+            result = self.cpp_checker.check_transport_like_safe_grid(
+                moving,
+                self._cpp_container_bounds(c),
+                self._cpp_packed_boxes(c, packed),
+                float(target[0]), float(target[1]), float(target[2]),
+                float(c.get('cut_x', 0.0)),
+                float(c.get('thickness', 0.04)),
+                float(self.start_margin),
+                float(self.safety_margin),
+                0.0,
+                0.01,
+                float(self.safety_margin),
+            )
+            self.cpp_stats['path_cpp'] += 1
+            return bool(result['ok'])
+
+        # Python fallback: same analytical two-segment approximation used in
+        # safe_grid before C++ authority.
+        self.cpp_stats['python_fallback_path'] += 1
+        tx, ty, tz = map(float, target)
+        L, W = float(c['length']), float(c['width'])
+        t = float(c.get('thickness', 0.04))
+        cut_x = float(c.get('cut_x', 0.0))
+        hx, hy, hz = float(item['length'])/2, float(item['width'])/2, float(item['height'])/2
+        x_min = -L/2 + t + cut_x + hx + max(self.start_margin, self.safety_margin + 0.003)
+        x_max =  L/2 - t - hx - max(self.start_margin, self.safety_margin + 0.003)
+        start_x = min(max(tx, x_min), x_max)
+        start_y = -W/2
+
+        floor_bottom = tz - hz
+        path_z = tz if 0 <= floor_bottom-t <= 0.05 else min(
+            tz + 0.08,
+            float(c['height']) - t - hz - self.start_margin,
+        )
+        m = self.safety_margin
+        for obj in packed:
+            if obj.get('pos') is None:
+                continue
+            ox, oy, oz = self._local_pos(c, obj['pos'])
+            ohx, ohy, ohz = float(obj['length'])/2, float(obj['width'])/2, float(obj['height'])/2
+            if abs(path_z-oz) >= hz+ohz+m:
+                continue
+            ylo, yhi = sorted((start_y, ty))
+            if abs(start_x-ox) < hx+ohx+m and not (yhi+hy <= oy-ohy-m or ylo-hy >= oy+ohy+m):
+                return False
+            xlo, xhi = sorted((start_x, tx))
+            if abs(ty-oy) < hy+ohy+m and not (xhi+hx <= ox-ohx-m or xlo-hx >= ox+ohx+m):
+                return False
+        return True
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
+    def _local_pos(self, c, world_pos):
+        center = c.get('center', (0.0, 0.0, 0.0))
+        return (
+            float(world_pos[0]) - float(center[0]),
+            float(world_pos[1]) - float(center[1]),
+            float(world_pos[2]) - float(center[2]),
+        )
+
+    def _fallback(self, container=None, item=None):
+        z = 0.1
+        if container is not None and item is not None:
+            z = float(container.get('thickness', 0.04)) + float(item['height'])/2 + 0.006
+        print(
+            f'[extreme_point_v01] mode=NO-FEASIBLE-CANDIDATE '
+            f'target=(0.000,0.000,{z:.3f}) stats={self.cpp_stats}'
+        )
+        return {
+            'item_idx': 0,
+            'container_idx': 0,
+            'place_pos': np.asarray((0.0, 0.0, z), dtype=np.float32),
+            'orientation': 0,
+        }

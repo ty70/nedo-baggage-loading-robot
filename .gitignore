@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+*.env
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+diagnostics.patch
+*.zip
+summary_final.txt
+summary.txt
+packed_placements_extreme_point_v3_5.json
+debug_output.txt
+.claude/

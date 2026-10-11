@@ -1,0 +1,1368 @@
+{
+  "000": {
+    "kind": "3d-bpp-layout",
+    "stage": "optimize",
+    "placements": {
+      "0": [
+        {
+          "index": 3,
+          "pos": [
+            -0.13,
+            0.3899999999999999,
+            0.19
+          ],
+          "local_pos": [
+            -0.13,
+            0.3899999999999999,
+            0.19
+          ],
+          "orientation": 0,
+          "length": 0.75,
+          "width": 0.56,
+          "height": 0.27,
+          "mass": 18.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 0,
+          "support_kind": "floor",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 0.10751439243432497,
+          "source": "optimize"
+        },
+        {
+          "index": 17,
+          "pos": [
+            0.545,
+            0.29499999999999993,
+            0.19
+          ],
+          "local_pos": [
+            0.545,
+            0.29499999999999993,
+            0.19
+          ],
+          "orientation": 3,
+          "length": 0.56,
+          "width": 0.75,
+          "height": 0.27,
+          "mass": 18.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 1,
+          "support_kind": "floor",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 0.18794914273159,
+          "source": "optimize"
+        },
+        {
+          "index": 21,
+          "pos": [
+            -0.13,
+            -0.19000000000000017,
+            0.19
+          ],
+          "local_pos": [
+            -0.13,
+            -0.19000000000000017,
+            0.19
+          ],
+          "orientation": 0,
+          "length": 0.75,
+          "width": 0.56,
+          "height": 0.27,
+          "mass": 18.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 2,
+          "support_kind": "floor",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 1.1169852604485937,
+          "source": "optimize"
+        },
+        {
+          "index": 33,
+          "pos": [
+            0.545,
+            0.29499999999999993,
+            0.463
+          ],
+          "local_pos": [
+            0.545,
+            0.29499999999999993,
+            0.463
+          ],
+          "orientation": 3,
+          "length": 0.56,
+          "width": 0.75,
+          "height": 0.27,
+          "mass": 18.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 3,
+          "support_kind": "box",
+          "support_item_id": 17,
+          "support_ratio": 1.0,
+          "score": 1.4596882731663727,
+          "source": "optimize"
+        },
+        {
+          "index": 5,
+          "pos": [
+            -0.07999999999999999,
+            0.44499999999999995,
+            0.453
+          ],
+          "local_pos": [
+            -0.07999999999999999,
+            0.44499999999999995,
+            0.453
+          ],
+          "orientation": 0,
+          "length": 0.65,
+          "width": 0.45,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 4,
+          "support_kind": "box",
+          "support_item_id": 3,
+          "support_ratio": 1.0,
+          "score": 0.8792954261785363,
+          "source": "optimize"
+        },
+        {
+          "index": 9,
+          "pos": [
+            0.7000000000000001,
+            -0.32500000000000007,
+            0.38
+          ],
+          "local_pos": [
+            0.7000000000000001,
+            -0.32500000000000007,
+            0.38
+          ],
+          "orientation": 2,
+          "length": 0.25,
+          "width": 0.45,
+          "height": 0.65,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 5,
+          "support_kind": "floor",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 1.8379822711796812,
+          "source": "optimize"
+        },
+        {
+          "index": 11,
+          "pos": [
+            0.43000000000000005,
+            -0.32500000000000007,
+            0.38
+          ],
+          "local_pos": [
+            0.43000000000000005,
+            -0.32500000000000007,
+            0.38
+          ],
+          "orientation": 2,
+          "length": 0.25,
+          "width": 0.45,
+          "height": 0.65,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 6,
+          "support_kind": "floor",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 1.871732271179681,
+          "source": "optimize"
+        },
+        {
+          "index": 19,
+          "pos": [
+            -0.07999999999999999,
+            0.44499999999999995,
+            0.7060000000000001
+          ],
+          "local_pos": [
+            -0.07999999999999999,
+            0.44499999999999995,
+            0.7060000000000001
+          ],
+          "orientation": 0,
+          "length": 0.65,
+          "width": 0.45,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 7,
+          "support_kind": "box",
+          "support_item_id": 5,
+          "support_ratio": 1.0,
+          "score": 1.8614382833213932,
+          "source": "optimize"
+        },
+        {
+          "index": 20,
+          "pos": [
+            -0.08000000000000002,
+            -0.13500000000000015,
+            0.453
+          ],
+          "local_pos": [
+            -0.08000000000000002,
+            -0.13500000000000015,
+            0.453
+          ],
+          "orientation": 0,
+          "length": 0.65,
+          "width": 0.45,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 8,
+          "support_kind": "box",
+          "support_item_id": 21,
+          "support_ratio": 1.0,
+          "score": 1.956061181232044,
+          "source": "optimize"
+        },
+        {
+          "index": 22,
+          "pos": [
+            0.6000000000000001,
+            0.3449999999999999,
+            0.7260000000000001
+          ],
+          "local_pos": [
+            0.6000000000000001,
+            0.3449999999999999,
+            0.7260000000000001
+          ],
+          "orientation": 3,
+          "length": 0.45,
+          "width": 0.65,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 9,
+          "support_kind": "box",
+          "support_item_id": 33,
+          "support_ratio": 1.0,
+          "score": 2.02756198255552,
+          "source": "optimize"
+        },
+        {
+          "index": 23,
+          "pos": [
+            -0.08000000000000002,
+            -0.13500000000000015,
+            0.7060000000000001
+          ],
+          "local_pos": [
+            -0.08000000000000002,
+            -0.13500000000000015,
+            0.7060000000000001
+          ],
+          "orientation": 0,
+          "length": 0.65,
+          "width": 0.45,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 10,
+          "support_kind": "box",
+          "support_item_id": 20,
+          "support_ratio": 1.0,
+          "score": 2.938204038374901,
+          "source": "optimize"
+        },
+        {
+          "index": 35,
+          "pos": [
+            -0.07999999999999999,
+            0.44499999999999995,
+            0.9590000000000001
+          ],
+          "local_pos": [
+            -0.07999999999999999,
+            0.44499999999999995,
+            0.9590000000000001
+          ],
+          "orientation": 0,
+          "length": 0.65,
+          "width": 0.45,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 11,
+          "support_kind": "box",
+          "support_item_id": 19,
+          "support_ratio": 1.0,
+          "score": 2.84358114046425,
+          "source": "optimize"
+        },
+        {
+          "index": 39,
+          "pos": [
+            0.6000000000000001,
+            0.3449999999999999,
+            0.9790000000000001
+          ],
+          "local_pos": [
+            0.6000000000000001,
+            0.3449999999999999,
+            0.9790000000000001
+          ],
+          "orientation": 3,
+          "length": 0.45,
+          "width": 0.65,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 12,
+          "support_kind": "box",
+          "support_item_id": 22,
+          "support_ratio": 1.0,
+          "score": 3.0097048396983763,
+          "source": "optimize"
+        },
+        {
+          "index": 0,
+          "pos": [
+            -0.7350000000000001,
+            0.3949999999999999,
+            0.9680000000000001
+          ],
+          "local_pos": [
+            -0.7350000000000001,
+            0.3949999999999999,
+            0.9680000000000001
+          ],
+          "orientation": 3,
+          "length": 0.4,
+          "width": 0.55,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 13,
+          "support_kind": "small-shelf",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 2.295583207472618,
+          "source": "optimize"
+        },
+        {
+          "index": 4,
+          "pos": [
+            -0.03,
+            0.4699999999999999,
+            1.2069999999999999
+          ],
+          "local_pos": [
+            -0.03,
+            0.4699999999999999,
+            1.2069999999999999
+          ],
+          "orientation": 0,
+          "length": 0.55,
+          "width": 0.4,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 14,
+          "support_kind": "box",
+          "support_item_id": 35,
+          "support_ratio": 1.0,
+          "score": 2.8195812715563395,
+          "source": "optimize"
+        },
+        {
+          "index": 6,
+          "pos": [
+            -0.030000000000000027,
+            -0.11000000000000015,
+            0.9540000000000001
+          ],
+          "local_pos": [
+            -0.030000000000000027,
+            -0.11000000000000015,
+            0.9540000000000001
+          ],
+          "orientation": 0,
+          "length": 0.55,
+          "width": 0.4,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 15,
+          "support_kind": "box",
+          "support_item_id": 23,
+          "support_ratio": 1.0,
+          "score": 3.1085816112879523,
+          "source": "optimize"
+        },
+        {
+          "index": 10,
+          "pos": [
+            -0.7350000000000001,
+            0.3949999999999999,
+            1.2109999999999999
+          ],
+          "local_pos": [
+            -0.7350000000000001,
+            0.3949999999999999,
+            1.2109999999999999
+          ],
+          "orientation": 3,
+          "length": 0.4,
+          "width": 0.55,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 16,
+          "support_kind": "box",
+          "support_item_id": 0,
+          "support_ratio": 1.0,
+          "score": 3.050241592565785,
+          "source": "optimize"
+        },
+        {
+          "index": 12,
+          "pos": [
+            -0.7350000000000001,
+            -0.17500000000000016,
+            0.9680000000000001
+          ],
+          "local_pos": [
+            -0.7350000000000001,
+            -0.17500000000000016,
+            0.9680000000000001
+          ],
+          "orientation": 3,
+          "length": 0.4,
+          "width": 0.55,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 17,
+          "support_kind": "small-shelf",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 3.287652172989859,
+          "source": "optimize"
+        },
+        {
+          "index": 18,
+          "pos": [
+            0.7050000000000001,
+            -0.30000000000000004,
+            0.9830000000000001
+          ],
+          "local_pos": [
+            0.7050000000000001,
+            -0.30000000000000004,
+            0.9830000000000001
+          ],
+          "orientation": 2,
+          "length": 0.24,
+          "width": 0.4,
+          "height": 0.55,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 18,
+          "support_kind": "box",
+          "support_item_id": 9,
+          "support_ratio": 0.9999999999999999,
+          "score": 3.4446640857526907,
+          "source": "optimize"
+        },
+        {
+          "index": 24,
+          "pos": [
+            0.43500000000000005,
+            -0.30000000000000004,
+            0.9830000000000001
+          ],
+          "local_pos": [
+            0.43500000000000005,
+            -0.30000000000000004,
+            0.9830000000000001
+          ],
+          "orientation": 2,
+          "length": 0.24,
+          "width": 0.4,
+          "height": 0.55,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 19,
+          "support_kind": "box",
+          "support_item_id": 11,
+          "support_ratio": 0.9999999999999999,
+          "score": 3.47841408575269,
+          "source": "optimize"
+        },
+        {
+          "index": 27,
+          "pos": [
+            -0.030000000000000027,
+            -0.11000000000000015,
+            1.197
+          ],
+          "local_pos": [
+            -0.030000000000000027,
+            -0.11000000000000015,
+            1.197
+          ],
+          "orientation": 0,
+          "length": 0.55,
+          "width": 0.4,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 20,
+          "support_kind": "box",
+          "support_item_id": 6,
+          "support_ratio": 1.0,
+          "score": 3.8632399963811204,
+          "source": "optimize"
+        },
+        {
+          "index": 29,
+          "pos": [
+            -0.7350000000000001,
+            -0.17500000000000016,
+            1.2109999999999999
+          ],
+          "local_pos": [
+            -0.7350000000000001,
+            -0.17500000000000016,
+            1.2109999999999999
+          ],
+          "orientation": 3,
+          "length": 0.4,
+          "width": 0.55,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 21,
+          "support_kind": "box",
+          "support_item_id": 12,
+          "support_ratio": 1.0,
+          "score": 4.0423105580830265,
+          "source": "optimize"
+        },
+        {
+          "index": 32,
+          "pos": [
+            0.625,
+            0.3949999999999999,
+            1.2269999999999999
+          ],
+          "local_pos": [
+            0.625,
+            0.3949999999999999,
+            1.2269999999999999
+          ],
+          "orientation": 3,
+          "length": 0.4,
+          "width": 0.55,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 22,
+          "support_kind": "box",
+          "support_item_id": 39,
+          "support_ratio": 1.0,
+          "score": 2.929931033559574,
+          "source": "optimize"
+        }
+      ]
+    },
+    "geometric_placements": {
+      "0": [
+        {
+          "index": 3,
+          "pos": [
+            -0.13,
+            0.3899999999999999,
+            0.19
+          ],
+          "local_pos": [
+            -0.13,
+            0.3899999999999999,
+            0.19
+          ],
+          "orientation": 0,
+          "length": 0.75,
+          "width": 0.56,
+          "height": 0.27,
+          "mass": 18.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 0,
+          "support_kind": "floor",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 0.10751439243432497,
+          "source": "optimize"
+        },
+        {
+          "index": 17,
+          "pos": [
+            0.545,
+            0.29499999999999993,
+            0.19
+          ],
+          "local_pos": [
+            0.545,
+            0.29499999999999993,
+            0.19
+          ],
+          "orientation": 3,
+          "length": 0.56,
+          "width": 0.75,
+          "height": 0.27,
+          "mass": 18.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 1,
+          "support_kind": "floor",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 0.18794914273159,
+          "source": "optimize"
+        },
+        {
+          "index": 21,
+          "pos": [
+            -0.13,
+            -0.19000000000000017,
+            0.19
+          ],
+          "local_pos": [
+            -0.13,
+            -0.19000000000000017,
+            0.19
+          ],
+          "orientation": 0,
+          "length": 0.75,
+          "width": 0.56,
+          "height": 0.27,
+          "mass": 18.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 2,
+          "support_kind": "floor",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 1.1169852604485937,
+          "source": "optimize"
+        },
+        {
+          "index": 33,
+          "pos": [
+            0.545,
+            0.29499999999999993,
+            0.463
+          ],
+          "local_pos": [
+            0.545,
+            0.29499999999999993,
+            0.463
+          ],
+          "orientation": 3,
+          "length": 0.56,
+          "width": 0.75,
+          "height": 0.27,
+          "mass": 18.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 3,
+          "support_kind": "box",
+          "support_item_id": 17,
+          "support_ratio": 1.0,
+          "score": 1.4596882731663727,
+          "source": "optimize"
+        },
+        {
+          "index": 5,
+          "pos": [
+            -0.07999999999999999,
+            0.44499999999999995,
+            0.453
+          ],
+          "local_pos": [
+            -0.07999999999999999,
+            0.44499999999999995,
+            0.453
+          ],
+          "orientation": 0,
+          "length": 0.65,
+          "width": 0.45,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 4,
+          "support_kind": "box",
+          "support_item_id": 3,
+          "support_ratio": 1.0,
+          "score": 0.8792954261785363,
+          "source": "optimize"
+        },
+        {
+          "index": 9,
+          "pos": [
+            0.7000000000000001,
+            -0.32500000000000007,
+            0.38
+          ],
+          "local_pos": [
+            0.7000000000000001,
+            -0.32500000000000007,
+            0.38
+          ],
+          "orientation": 2,
+          "length": 0.25,
+          "width": 0.45,
+          "height": 0.65,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 5,
+          "support_kind": "floor",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 1.8379822711796812,
+          "source": "optimize"
+        },
+        {
+          "index": 11,
+          "pos": [
+            0.43000000000000005,
+            -0.32500000000000007,
+            0.38
+          ],
+          "local_pos": [
+            0.43000000000000005,
+            -0.32500000000000007,
+            0.38
+          ],
+          "orientation": 2,
+          "length": 0.25,
+          "width": 0.45,
+          "height": 0.65,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 6,
+          "support_kind": "floor",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 1.871732271179681,
+          "source": "optimize"
+        },
+        {
+          "index": 19,
+          "pos": [
+            -0.07999999999999999,
+            0.44499999999999995,
+            0.7060000000000001
+          ],
+          "local_pos": [
+            -0.07999999999999999,
+            0.44499999999999995,
+            0.7060000000000001
+          ],
+          "orientation": 0,
+          "length": 0.65,
+          "width": 0.45,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 7,
+          "support_kind": "box",
+          "support_item_id": 5,
+          "support_ratio": 1.0,
+          "score": 1.8614382833213932,
+          "source": "optimize"
+        },
+        {
+          "index": 20,
+          "pos": [
+            -0.08000000000000002,
+            -0.13500000000000015,
+            0.453
+          ],
+          "local_pos": [
+            -0.08000000000000002,
+            -0.13500000000000015,
+            0.453
+          ],
+          "orientation": 0,
+          "length": 0.65,
+          "width": 0.45,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 8,
+          "support_kind": "box",
+          "support_item_id": 21,
+          "support_ratio": 1.0,
+          "score": 1.956061181232044,
+          "source": "optimize"
+        },
+        {
+          "index": 22,
+          "pos": [
+            0.6000000000000001,
+            0.3449999999999999,
+            0.7260000000000001
+          ],
+          "local_pos": [
+            0.6000000000000001,
+            0.3449999999999999,
+            0.7260000000000001
+          ],
+          "orientation": 3,
+          "length": 0.45,
+          "width": 0.65,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 9,
+          "support_kind": "box",
+          "support_item_id": 33,
+          "support_ratio": 1.0,
+          "score": 2.02756198255552,
+          "source": "optimize"
+        },
+        {
+          "index": 23,
+          "pos": [
+            -0.08000000000000002,
+            -0.13500000000000015,
+            0.7060000000000001
+          ],
+          "local_pos": [
+            -0.08000000000000002,
+            -0.13500000000000015,
+            0.7060000000000001
+          ],
+          "orientation": 0,
+          "length": 0.65,
+          "width": 0.45,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 10,
+          "support_kind": "box",
+          "support_item_id": 20,
+          "support_ratio": 1.0,
+          "score": 2.938204038374901,
+          "source": "optimize"
+        },
+        {
+          "index": 35,
+          "pos": [
+            -0.07999999999999999,
+            0.44499999999999995,
+            0.9590000000000001
+          ],
+          "local_pos": [
+            -0.07999999999999999,
+            0.44499999999999995,
+            0.9590000000000001
+          ],
+          "orientation": 0,
+          "length": 0.65,
+          "width": 0.45,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 11,
+          "support_kind": "box",
+          "support_item_id": 19,
+          "support_ratio": 1.0,
+          "score": 2.84358114046425,
+          "source": "optimize"
+        },
+        {
+          "index": 39,
+          "pos": [
+            0.6000000000000001,
+            0.3449999999999999,
+            0.9790000000000001
+          ],
+          "local_pos": [
+            0.6000000000000001,
+            0.3449999999999999,
+            0.9790000000000001
+          ],
+          "orientation": 3,
+          "length": 0.45,
+          "width": 0.65,
+          "height": 0.25,
+          "mass": 13.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 12,
+          "support_kind": "box",
+          "support_item_id": 22,
+          "support_ratio": 1.0,
+          "score": 3.0097048396983763,
+          "source": "optimize"
+        },
+        {
+          "index": 0,
+          "pos": [
+            -0.7350000000000001,
+            0.3949999999999999,
+            0.9680000000000001
+          ],
+          "local_pos": [
+            -0.7350000000000001,
+            0.3949999999999999,
+            0.9680000000000001
+          ],
+          "orientation": 3,
+          "length": 0.4,
+          "width": 0.55,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 13,
+          "support_kind": "small-shelf",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 2.295583207472618,
+          "source": "optimize"
+        },
+        {
+          "index": 4,
+          "pos": [
+            -0.03,
+            0.4699999999999999,
+            1.2069999999999999
+          ],
+          "local_pos": [
+            -0.03,
+            0.4699999999999999,
+            1.2069999999999999
+          ],
+          "orientation": 0,
+          "length": 0.55,
+          "width": 0.4,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 14,
+          "support_kind": "box",
+          "support_item_id": 35,
+          "support_ratio": 1.0,
+          "score": 2.8195812715563395,
+          "source": "optimize"
+        },
+        {
+          "index": 6,
+          "pos": [
+            -0.030000000000000027,
+            -0.11000000000000015,
+            0.9540000000000001
+          ],
+          "local_pos": [
+            -0.030000000000000027,
+            -0.11000000000000015,
+            0.9540000000000001
+          ],
+          "orientation": 0,
+          "length": 0.55,
+          "width": 0.4,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 15,
+          "support_kind": "box",
+          "support_item_id": 23,
+          "support_ratio": 1.0,
+          "score": 3.1085816112879523,
+          "source": "optimize"
+        },
+        {
+          "index": 10,
+          "pos": [
+            -0.7350000000000001,
+            0.3949999999999999,
+            1.2109999999999999
+          ],
+          "local_pos": [
+            -0.7350000000000001,
+            0.3949999999999999,
+            1.2109999999999999
+          ],
+          "orientation": 3,
+          "length": 0.4,
+          "width": 0.55,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 16,
+          "support_kind": "box",
+          "support_item_id": 0,
+          "support_ratio": 1.0,
+          "score": 3.050241592565785,
+          "source": "optimize"
+        },
+        {
+          "index": 12,
+          "pos": [
+            -0.7350000000000001,
+            -0.17500000000000016,
+            0.9680000000000001
+          ],
+          "local_pos": [
+            -0.7350000000000001,
+            -0.17500000000000016,
+            0.9680000000000001
+          ],
+          "orientation": 3,
+          "length": 0.4,
+          "width": 0.55,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 17,
+          "support_kind": "small-shelf",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 3.287652172989859,
+          "source": "optimize"
+        },
+        {
+          "index": 18,
+          "pos": [
+            0.7050000000000001,
+            -0.30000000000000004,
+            0.9830000000000001
+          ],
+          "local_pos": [
+            0.7050000000000001,
+            -0.30000000000000004,
+            0.9830000000000001
+          ],
+          "orientation": 2,
+          "length": 0.24,
+          "width": 0.4,
+          "height": 0.55,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 18,
+          "support_kind": "box",
+          "support_item_id": 9,
+          "support_ratio": 0.9999999999999999,
+          "score": 3.4446640857526907,
+          "source": "optimize"
+        },
+        {
+          "index": 24,
+          "pos": [
+            0.43500000000000005,
+            -0.30000000000000004,
+            0.9830000000000001
+          ],
+          "local_pos": [
+            0.43500000000000005,
+            -0.30000000000000004,
+            0.9830000000000001
+          ],
+          "orientation": 2,
+          "length": 0.24,
+          "width": 0.4,
+          "height": 0.55,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 19,
+          "support_kind": "box",
+          "support_item_id": 11,
+          "support_ratio": 0.9999999999999999,
+          "score": 3.47841408575269,
+          "source": "optimize"
+        },
+        {
+          "index": 27,
+          "pos": [
+            -0.030000000000000027,
+            -0.11000000000000015,
+            1.197
+          ],
+          "local_pos": [
+            -0.030000000000000027,
+            -0.11000000000000015,
+            1.197
+          ],
+          "orientation": 0,
+          "length": 0.55,
+          "width": 0.4,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 20,
+          "support_kind": "box",
+          "support_item_id": 6,
+          "support_ratio": 1.0,
+          "score": 3.8632399963811204,
+          "source": "optimize"
+        },
+        {
+          "index": 29,
+          "pos": [
+            -0.7350000000000001,
+            -0.17500000000000016,
+            1.2109999999999999
+          ],
+          "local_pos": [
+            -0.7350000000000001,
+            -0.17500000000000016,
+            1.2109999999999999
+          ],
+          "orientation": 3,
+          "length": 0.4,
+          "width": 0.55,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 21,
+          "support_kind": "box",
+          "support_item_id": 12,
+          "support_ratio": 1.0,
+          "score": 4.0423105580830265,
+          "source": "optimize"
+        },
+        {
+          "index": 32,
+          "pos": [
+            0.625,
+            0.3949999999999999,
+            1.2269999999999999
+          ],
+          "local_pos": [
+            0.625,
+            0.3949999999999999,
+            1.2269999999999999
+          ],
+          "orientation": 3,
+          "length": 0.4,
+          "width": 0.55,
+          "height": 0.24,
+          "mass": 8.0,
+          "is_prioritized": false,
+          "is_soft": false,
+          "plan_rank": 22,
+          "support_kind": "box",
+          "support_item_id": 39,
+          "support_ratio": 1.0,
+          "score": 2.929931033559574,
+          "source": "optimize"
+        },
+        {
+          "index": 16,
+          "pos": [
+            -0.7100000000000002,
+            -0.5850000000000002,
+            1.173
+          ],
+          "local_pos": [
+            -0.7100000000000002,
+            -0.5850000000000002,
+            1.173
+          ],
+          "orientation": 4,
+          "length": 0.35,
+          "width": 0.23,
+          "height": 0.65,
+          "mass": 12.0,
+          "is_prioritized": false,
+          "is_soft": true,
+          "plan_rank": 23,
+          "support_kind": "small-shelf",
+          "support_item_id": null,
+          "support_ratio": 0.9347826086956511,
+          "score": 5.810317381333965,
+          "source": "optimize"
+        },
+        {
+          "index": 2,
+          "pos": [
+            0.01999999999999999,
+            -0.5900000000000002,
+            0.205
+          ],
+          "local_pos": [
+            0.01999999999999999,
+            -0.5900000000000002,
+            0.205
+          ],
+          "orientation": 1,
+          "length": 0.45,
+          "width": 0.2,
+          "height": 0.3,
+          "mass": 5.0,
+          "is_prioritized": false,
+          "is_soft": true,
+          "plan_rank": 24,
+          "support_kind": "floor",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 1.7996538245655502,
+          "source": "optimize"
+        },
+        {
+          "index": 7,
+          "pos": [
+            -0.375,
+            -0.5900000000000002,
+            0.28
+          ],
+          "local_pos": [
+            -0.375,
+            -0.5900000000000002,
+            0.28
+          ],
+          "orientation": 4,
+          "length": 0.3,
+          "width": 0.2,
+          "height": 0.45,
+          "mass": 5.0,
+          "is_prioritized": false,
+          "is_soft": true,
+          "plan_rank": 25,
+          "support_kind": "floor",
+          "support_item_id": null,
+          "support_ratio": 1.0,
+          "score": 2.0470101910251777,
+          "source": "optimize"
+        }
+      ]
+    },
+    "container_list": [
+      {
+        "index": 0,
+        "length": 2.0,
+        "width": 1.45,
+        "height": 1.61,
+        "center": [
+          0.0,
+          0.0,
+          0.805
+        ],
+        "thickness": 0.04,
+        "buffer": 0.0,
+        "cut_x": 0.44,
+        "cut_y": 0.4,
+        "require_shelf": false,
+        "is_prioritized": false
+      }
+    ],
+    "bpp_order": [
+      3,
+      17,
+      21,
+      33,
+      5,
+      9,
+      11,
+      19,
+      20,
+      22,
+      23,
+      35,
+      39,
+      0,
+      4,
+      6,
+      10,
+      12,
+      18,
+      24,
+      27,
+      29,
+      32
+    ],
+    "geometric_bpp_order": [
+      3,
+      17,
+      21,
+      33,
+      5,
+      9,
+      11,
+      19,
+      20,
+      22,
+      23,
+      35,
+      39,
+      0,
+      4,
+      6,
+      10,
+      12,
+      18,
+      24,
+      27,
+      29,
+      32,
+      16,
+      2,
+      7
+    ],
+    "num_planned_items": 23,
+    "num_geometric_items": 26,
+    "blocked_item_ids": [
+      16,
+      2,
+      7
+    ],
+    "note": "placements: feasible subset; geometric_placements: full geometry from the same selected search layout, before insertion filtering. The extra boxes are hypothetical, not proven transportable."
+  }
+}
