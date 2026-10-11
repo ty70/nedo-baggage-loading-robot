@@ -1,0 +1,50 @@
+{
+  "config": "configs/sample_config.json",
+  "evaluation": {
+    "000": {
+      "evaluation": {
+        "fill_score": 36.161933587822816,
+        "num_placed_items": 0.7317073170731707
+      },
+      "message": "ok",
+      "status": "success",
+      "place_states": {
+        "is_included": false,
+        "is_valid": false,
+        "is_placed_safe": false
+      },
+      "time_results": {
+        "optimization": 51.562920237999606,
+        "policy": 0.015796497000337695
+      }
+    },
+    "001": {
+      "evaluation": {
+        "fill_score": 13.533175238377552,
+        "num_placed_items": 0.40476190476190477
+      },
+      "message": "ok",
+      "status": "success",
+      "place_states": {
+        "is_included": false,
+        "is_valid": false,
+        "is_placed_safe": false
+      },
+      "time_results": {
+        "optimization": 0,
+        "policy": 0.18569235000040862
+      }
+    }
+  },
+  "runtime": {
+    "wall_seconds": 60.526282163999895,
+    "exit_code": 0,
+    "task_ids": [
+      "000",
+      "001"
+    ],
+    "error_tasks": [],
+    "missing_tasks": [],
+    "checker": "/workspace/scratch/6f7f5f4f51db/robustness_state/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+  }
+}
