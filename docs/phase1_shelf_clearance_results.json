@@ -1,0 +1,250 @@
+{
+  "base_commit": "3a0623d",
+  "protected_files_unchanged": true,
+  "bpp_plans_identical": true,
+  "improvement_runs": 2,
+  "runs": [
+    {
+      "run": "v14-1",
+      "directory": "/workspace/nedo-cloud/runs/simulation-3e9afkgb",
+      "runtime": {
+        "wall_seconds": 35.261343016999945,
+        "exit_code": 0,
+        "task_ids": [
+          "000",
+          "001"
+        ],
+        "error_tasks": [],
+        "missing_tasks": [],
+        "checker": "/workspace/nedo-cloud/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+      },
+      "evaluation": {
+        "000": {
+          "evaluation": {
+            "fill_score": 11.13495563736843,
+            "num_placed_items": 0.21951219512195122
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": true,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 32.94425725799999,
+            "policy": 0.003781200000048557
+          }
+        },
+        "001": {
+          "evaluation": {
+            "fill_score": 13.533175238377552,
+            "num_placed_items": 0.40476190476190477
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": false,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 0,
+            "policy": 0.12873743000000104
+          }
+        }
+      },
+      "planned_counts": {
+        "000": 30,
+        "001": 17
+      },
+      "safe_abort": [
+        "[search_cand_v5][SAFE-ABORT] step=18 reason=NO-BPP-PLAN-AFTER-REPLAN item=14 target=(3.550,0.000,0.810) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "collisions": [
+        "collision: 39 and 3(small shelf) at (np.float32(-0.28), np.float32(-0.725), np.float32(0.76699996)), distance 0.014999998807907153"
+      ]
+    },
+    {
+      "run": "v14-2",
+      "directory": "/workspace/nedo-cloud/runs/simulation-ino76g88",
+      "runtime": {
+        "wall_seconds": 35.38039530499998,
+        "exit_code": 0,
+        "task_ids": [
+          "000",
+          "001"
+        ],
+        "error_tasks": [],
+        "missing_tasks": [],
+        "checker": "/workspace/nedo-cloud/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+      },
+      "evaluation": {
+        "000": {
+          "evaluation": {
+            "fill_score": 11.13495563736843,
+            "num_placed_items": 0.21951219512195122
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": true,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 33.134686568999996,
+            "policy": 0.0038101530000176353
+          }
+        },
+        "001": {
+          "evaluation": {
+            "fill_score": 13.533175238377552,
+            "num_placed_items": 0.40476190476190477
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": false,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 0,
+            "policy": 0.1246322299999747
+          }
+        }
+      },
+      "planned_counts": {
+        "000": 30,
+        "001": 17
+      },
+      "safe_abort": [
+        "[search_cand_v5][SAFE-ABORT] step=18 reason=NO-BPP-PLAN-AFTER-REPLAN item=14 target=(3.550,0.000,0.810) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "collisions": [
+        "collision: 39 and 3(small shelf) at (np.float32(-0.28), np.float32(-0.725), np.float32(0.76699996)), distance 0.014999998807907153"
+      ]
+    },
+    {
+      "run": "v15-1",
+      "directory": "/workspace/nedo-cloud/runs/simulation-9pc6utw8",
+      "runtime": {
+        "wall_seconds": 39.553774859999976,
+        "exit_code": 0,
+        "task_ids": [
+          "000",
+          "001"
+        ],
+        "error_tasks": [],
+        "missing_tasks": [],
+        "checker": "/workspace/nedo-cloud/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+      },
+      "evaluation": {
+        "000": {
+          "evaluation": {
+            "fill_score": 36.161933587822816,
+            "num_placed_items": 0.7317073170731707
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": false,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 33.21650982899996,
+            "policy": 0.011119828000005327
+          }
+        },
+        "001": {
+          "evaluation": {
+            "fill_score": 13.533175238377552,
+            "num_placed_items": 0.40476190476190477
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": false,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 0,
+            "policy": 0.12463688200000433
+          }
+        }
+      },
+      "planned_counts": {
+        "000": 30,
+        "001": 17
+      },
+      "safe_abort": [
+        "[search_cand_v5][SAFE-ABORT] step=31 reason=NO-BPP-PLAN-AFTER-REPLAN item=38 target=(3.550,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT",
+        "[search_cand_v5][SAFE-ABORT] step=18 reason=NO-BPP-PLAN-AFTER-REPLAN item=14 target=(3.550,0.000,0.810) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "collisions": []
+    },
+    {
+      "run": "v15-2",
+      "directory": "/workspace/nedo-cloud/runs/simulation-19nie9gx",
+      "runtime": {
+        "wall_seconds": 39.16412156399997,
+        "exit_code": 0,
+        "task_ids": [
+          "000",
+          "001"
+        ],
+        "error_tasks": [],
+        "missing_tasks": [],
+        "checker": "/workspace/nedo-cloud/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+      },
+      "evaluation": {
+        "000": {
+          "evaluation": {
+            "fill_score": 36.161933587822816,
+            "num_placed_items": 0.7317073170731707
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": false,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 33.15026538200004,
+            "policy": 0.010839871000030143
+          }
+        },
+        "001": {
+          "evaluation": {
+            "fill_score": 13.533175238377552,
+            "num_placed_items": 0.40476190476190477
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": false,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 0,
+            "policy": 0.12631132600006367
+          }
+        }
+      },
+      "planned_counts": {
+        "000": 30,
+        "001": 17
+      },
+      "safe_abort": [
+        "[search_cand_v5][SAFE-ABORT] step=31 reason=NO-BPP-PLAN-AFTER-REPLAN item=38 target=(3.550,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT",
+        "[search_cand_v5][SAFE-ABORT] step=18 reason=NO-BPP-PLAN-AFTER-REPLAN item=14 target=(3.550,0.000,0.810) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "collisions": []
+    }
+  ]
+}
