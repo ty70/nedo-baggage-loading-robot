@@ -1,0 +1,515 @@
+{
+  "provenance": {
+    "base_commit": "60fb498ef2318c224793e31258dec097b7de8514",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "module_path": "agents/search_cand_v16_observed_pose/",
+    "profile": {
+      "PYTHONUNBUFFERED": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "EP_CPP_MODE": "cpp",
+      "SC_SEARCH_TRIALS": "16",
+      "SC_SEARCH_MAX_SECONDS": "60",
+      "SC_FEASIBILITY_BEAM": "12",
+      "SC_FEASIBILITY_BRANCH": "8"
+    },
+    "manifest_sha256": "8f4867fde6cfdc9100281afb5ccc2c04baf2b9a83f236d23df9dae3798b068e0",
+    "limitations": "Local fill_score and packed ratio only; no hidden contest score. Synthetic holdout is observed once for frozen baseline.",
+    "source_hashes": {
+      "scripts/benchmark_robustness.py": "760ab9a0fb22993fc2a8f4a131e5e63061361f930aa29fbb5c98851718742c3e",
+      "scripts/generate_robustness_cases.py": "47572fb70c0f88067f4ebc4a5a2fce1b39e58941bb7905a0e7a29fb62bd75b77",
+      "scripts/run_robustness_case.py": "3a19c11e19efbf1ed5478fb873769c14086d9afff493b5376f8b0e24ff0584f6",
+      "scripts/test_robustness_cases.py": "498bed82025e5814e76054ee06241ccf3b011027d2556af0ebe1f639c055183b"
+    }
+  },
+  "summary": {
+    "split": {
+      "development": {
+        "cases": 4,
+        "evaluation_ok": 4,
+        "errors": 0,
+        "mean_fill_score": 21.750318262369074,
+        "mean_placed_ratio": 0.4952362804878049,
+        "minimum_placed_ratio": 0.36585365853658536,
+        "complete_cases": 0,
+        "stop_reasons": {
+          "inclusion_rejected": 1,
+          "no_plan_safe_abort": 2,
+          "settling_rejected": 1
+        }
+      }
+    },
+    "group": {
+      "load": {
+        "cases": 1,
+        "evaluation_ok": 1,
+        "errors": 0,
+        "mean_fill_score": 13.760436737315352,
+        "mean_placed_ratio": 0.46875,
+        "minimum_placed_ratio": 0.46875,
+        "complete_cases": 0,
+        "stop_reasons": {
+          "settling_rejected": 1
+        }
+      },
+      "order": {
+        "cases": 2,
+        "evaluation_ok": 2,
+        "errors": 0,
+        "mean_fill_score": 28.255410064846895,
+        "mean_placed_ratio": 0.5731707317073171,
+        "minimum_placed_ratio": 0.5121951219512195,
+        "complete_cases": 0,
+        "stop_reasons": {
+          "no_plan_safe_abort": 2
+        }
+      },
+      "shelf_opening": {
+        "cases": 1,
+        "evaluation_ok": 1,
+        "errors": 0,
+        "mean_fill_score": 16.730016182467153,
+        "mean_placed_ratio": 0.36585365853658536,
+        "minimum_placed_ratio": 0.36585365853658536,
+        "complete_cases": 0,
+        "stop_reasons": {
+          "inclusion_rejected": 1
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "101",
+      "group": "order",
+      "split": "development",
+      "seed": 271601,
+      "source_template": "000",
+      "optimize": true,
+      "num_items": 41,
+      "num_containers": 1,
+      "nominal_volume_load": 0.6460410603819793,
+      "sha256": "02585ebb2a89b5476ae0468fab3f096466a4c2bbf5ad6dd61d539d3a50a3f3fc",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 60.599489817000176,
+      "fill_score": 25.335814339791394,
+      "placed_ratio": 0.5121951219512195,
+      "actual_packed_count": 21,
+      "initial_offline_plan_count": 22,
+      "planned_union_count": 22,
+      "stop_reason": "no_plan_safe_abort",
+      "optimization_seconds": 56.87803647300029,
+      "policy_seconds": 0.004295582999930048,
+      "timeout_messages": [],
+      "safe_abort_messages": [
+        "[search_cand_v5][SAFE-ABORT] step=22 reason=ALL-ROUTES-BLOCKED item=35 target=(3.600,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": []
+    },
+    {
+      "id": "103",
+      "group": "order",
+      "split": "development",
+      "seed": 271603,
+      "source_template": "000",
+      "optimize": true,
+      "num_items": 41,
+      "num_containers": 1,
+      "nominal_volume_load": 0.6460410603819793,
+      "sha256": "c4f088c252a1add8494fa205828fcef6df8081b76c51608431bada865d1fcf97",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 57.68864001499969,
+      "fill_score": 31.175005789902396,
+      "placed_ratio": 0.6341463414634146,
+      "actual_packed_count": 26,
+      "initial_offline_plan_count": 31,
+      "planned_union_count": 31,
+      "stop_reason": "no_plan_safe_abort",
+      "optimization_seconds": 52.790856904000066,
+      "policy_seconds": 0.005163444000118034,
+      "timeout_messages": [],
+      "safe_abort_messages": [
+        "[search_cand_v5][SAFE-ABORT] step=27 reason=ALL-ROUTES-BLOCKED item=37 target=(3.600,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": []
+    },
+    {
+      "id": "112",
+      "group": "load",
+      "split": "development",
+      "seed": 291602,
+      "source_template": "001",
+      "optimize": false,
+      "num_items": 32,
+      "num_containers": 1,
+      "nominal_volume_load": 0.4942623190667552,
+      "sha256": "ab7a86236cbd48bf8879d190a5d07fc60961d450bd008ee4a96d0ff009c7214b",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 2.5711344470000768,
+      "fill_score": 13.760436737315352,
+      "placed_ratio": 0.46875,
+      "actual_packed_count": 15,
+      "initial_offline_plan_count": null,
+      "planned_union_count": 18,
+      "stop_reason": "settling_rejected",
+      "optimization_seconds": 0,
+      "policy_seconds": 0.09789560299986988,
+      "timeout_messages": [],
+      "safe_abort_messages": [],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": []
+    },
+    {
+      "id": "123",
+      "group": "shelf_opening",
+      "split": "development",
+      "seed": 311603,
+      "source_template": "000",
+      "optimize": true,
+      "num_items": 41,
+      "num_containers": 1,
+      "nominal_volume_load": 0.6585025853824584,
+      "sha256": "e8ecdef6eeca069832ce2f1eb16c3335635e6cf0587e681fc496782e7d749553",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 53.88149539899996,
+      "fill_score": 16.730016182467153,
+      "placed_ratio": 0.36585365853658536,
+      "actual_packed_count": 15,
+      "initial_offline_plan_count": 25,
+      "planned_union_count": 25,
+      "stop_reason": "inclusion_rejected",
+      "optimization_seconds": 51.83193599700007,
+      "policy_seconds": 0.005997344000206795,
+      "timeout_messages": [],
+      "safe_abort_messages": [],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": []
+    }
+  ],
+  "comparison_baseline": [
+    {
+      "id": "101",
+      "group": "order",
+      "split": "development",
+      "seed": 271601,
+      "source_template": "000",
+      "optimize": true,
+      "num_items": 41,
+      "num_containers": 1,
+      "nominal_volume_load": 0.6460410603819793,
+      "sha256": "02585ebb2a89b5476ae0468fab3f096466a4c2bbf5ad6dd61d539d3a50a3f3fc",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 51.83567299200013,
+      "fill_score": 26.45885575556229,
+      "placed_ratio": 0.5365853658536586,
+      "actual_packed_count": 22,
+      "initial_offline_plan_count": 22,
+      "planned_union_count": 22,
+      "stop_reason": "no_plan_safe_abort",
+      "optimization_seconds": 48.26562471299985,
+      "policy_seconds": 0.010060509000140883,
+      "timeout_messages": [],
+      "safe_abort_messages": [
+        "[search_cand_v5][SAFE-ABORT] step=23 reason=NO-BPP-PLAN-AFTER-REPLAN item=22 target=(3.750,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": [],
+      "evaluation_excluded_item_ids": [
+        6,
+        7,
+        9,
+        12,
+        19,
+        25,
+        32
+      ]
+    },
+    {
+      "id": "103",
+      "group": "order",
+      "split": "development",
+      "seed": 271603,
+      "source_template": "000",
+      "optimize": true,
+      "num_items": 41,
+      "num_containers": 1,
+      "nominal_volume_load": 0.6460410603819793,
+      "sha256": "c4f088c252a1add8494fa205828fcef6df8081b76c51608431bada865d1fcf97",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 52.98656470200012,
+      "fill_score": 31.175005789902396,
+      "placed_ratio": 0.6341463414634146,
+      "actual_packed_count": 26,
+      "initial_offline_plan_count": 31,
+      "planned_union_count": 31,
+      "stop_reason": "transport_rejected",
+      "optimization_seconds": 48.321397895000246,
+      "policy_seconds": 0.00487361699970279,
+      "timeout_messages": [],
+      "safe_abort_messages": [],
+      "collision_messages": [
+        "collision: 37 and 14 at (np.float32(-0.255), np.float32(-0.5474324), np.float32(0.98899996)), distance 0.014981444607188315"
+      ],
+      "placed_but_unplanned_ids": [],
+      "evaluation_excluded_item_ids": [
+        10,
+        24,
+        27,
+        29,
+        35,
+        38
+      ]
+    },
+    {
+      "id": "112",
+      "group": "load",
+      "split": "development",
+      "seed": 291602,
+      "source_template": "001",
+      "optimize": false,
+      "num_items": 32,
+      "num_containers": 1,
+      "nominal_volume_load": 0.4942623190667552,
+      "sha256": "ab7a86236cbd48bf8879d190a5d07fc60961d450bd008ee4a96d0ff009c7214b",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 2.4700277639999513,
+      "fill_score": 13.760436737315352,
+      "placed_ratio": 0.46875,
+      "actual_packed_count": 15,
+      "initial_offline_plan_count": null,
+      "planned_union_count": 18,
+      "stop_reason": "settling_rejected",
+      "optimization_seconds": 0,
+      "policy_seconds": 0.0766934759999458,
+      "timeout_messages": [],
+      "safe_abort_messages": [],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": [],
+      "evaluation_excluded_item_ids": [
+        0,
+        1,
+        2,
+        5,
+        6,
+        8
+      ]
+    },
+    {
+      "id": "123",
+      "group": "shelf_opening",
+      "split": "development",
+      "seed": 311603,
+      "source_template": "000",
+      "optimize": true,
+      "num_items": 41,
+      "num_containers": 1,
+      "nominal_volume_load": 0.6585025853824584,
+      "sha256": "e8ecdef6eeca069832ce2f1eb16c3335635e6cf0587e681fc496782e7d749553",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 54.6461176089997,
+      "fill_score": 16.730016182467153,
+      "placed_ratio": 0.36585365853658536,
+      "actual_packed_count": 15,
+      "initial_offline_plan_count": 25,
+      "planned_union_count": 25,
+      "stop_reason": "inclusion_rejected",
+      "optimization_seconds": 52.527677993,
+      "policy_seconds": 0.00562208900009864,
+      "timeout_messages": [],
+      "safe_abort_messages": [],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": [],
+      "evaluation_excluded_item_ids": [
+        5,
+        9,
+        11,
+        19,
+        20,
+        22,
+        39
+      ]
+    }
+  ],
+  "comparison_limitations": "Cached baseline, not a matched-load contemporaneous control; case 101 local GUI collision was not reproduced. No full 30-case improvement claim.",
+  "original_reference": {
+    "000": {
+      "evaluation": {
+        "fill_score": 36.161933587822816,
+        "num_placed_items": 0.7317073170731707
+      },
+      "message": "ok",
+      "status": "success",
+      "place_states": {
+        "is_included": false,
+        "is_valid": false,
+        "is_placed_safe": false
+      },
+      "time_results": {
+        "optimization": 56.66404453600035,
+        "policy": 0.01677994099964053
+      }
+    },
+    "001": {
+      "evaluation": {
+        "fill_score": 13.533175238377552,
+        "num_placed_items": 0.40476190476190477
+      },
+      "message": "ok",
+      "status": "success",
+      "place_states": {
+        "is_included": false,
+        "is_valid": false,
+        "is_placed_safe": false
+      },
+      "time_results": {
+        "optimization": 0,
+        "policy": 0.3231000839996341
+      }
+    }
+  },
+  "evidence": {
+    "101": {
+      "evaluation": {
+        "101": {
+          "evaluation": {
+            "fill_score": 25.335814339791394,
+            "num_placed_items": 0.5121951219512195
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": false,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 56.87803647300029,
+            "policy": 0.004295582999930048
+          }
+        }
+      },
+      "runtime": {
+        "wall_seconds": 60.375457672000266,
+        "exit_code": 0,
+        "error_tasks": [],
+        "missing_tasks": [],
+        "checker": "/workspace/scratch/6f7f5f4f51db/robustness_state/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+      },
+      "diagnostic_lines": [
+        "[search_cand_v5][PACK] step=14 item=38 plan_rank=15 ori=3 final_target=(-0.230,-0.235,0.686) ep=(-0.005,0.090,0.561,top:14) support=box score=2.99251",
+        "[search_cand_v5][SAFE-ABORT] step=22 reason=ALL-ROUTES-BLOCKED item=35 target=(3.600,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "log_sha256": "79d9af29aad42f40ff808645b4a20c238a3173e671ba5e21145fddaf9b0c060a"
+    },
+    "103": {
+      "evaluation": {
+        "103": {
+          "evaluation": {
+            "fill_score": 31.175005789902396,
+            "num_placed_items": 0.6341463414634146
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": false,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 52.790856904000066,
+            "policy": 0.005163444000118034
+          }
+        }
+      },
+      "runtime": {
+        "wall_seconds": 57.487514221999845,
+        "exit_code": 0,
+        "error_tasks": [],
+        "missing_tasks": [],
+        "checker": "/workspace/scratch/6f7f5f4f51db/robustness_state/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+      },
+      "diagnostic_lines": [
+        "[search_cand_v5][SAFE-ABORT] step=27 reason=ALL-ROUTES-BLOCKED item=37 target=(3.600,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "log_sha256": "f654bfc0119a11dfcbb761f4d20c2cef1b25c86720c995b3ba32ba22e7078155"
+    },
+    "112": {
+      "evaluation": {
+        "112": {
+          "evaluation": {
+            "fill_score": 13.760436737315352,
+            "num_placed_items": 0.46875
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": true,
+            "is_valid": true,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 0,
+            "policy": 0.09789560299986988
+          }
+        }
+      },
+      "runtime": {
+        "wall_seconds": 2.3643113640000593,
+        "exit_code": 0,
+        "error_tasks": [],
+        "missing_tasks": [],
+        "checker": "/workspace/scratch/6f7f5f4f51db/robustness_state/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+      },
+      "diagnostic_lines": [
+        "Not safe place (disp: 0.75m, angle: 96.1deg). Item 15 removed."
+      ],
+      "log_sha256": "0a5c8885ab5841147128c4502f612c2e79e50caea66291370c78e0ff34a43db8"
+    },
+    "123": {
+      "evaluation": {
+        "123": {
+          "evaluation": {
+            "fill_score": 16.730016182467153,
+            "num_placed_items": 0.36585365853658536
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": false,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 51.83193599700007,
+            "policy": 0.005997344000206795
+          }
+        }
+      },
+      "runtime": {
+        "wall_seconds": 53.696886707999965,
+        "exit_code": 0,
+        "error_tasks": [],
+        "missing_tasks": [],
+        "checker": "/workspace/scratch/6f7f5f4f51db/robustness_state/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+      },
+      "diagnostic_lines": [],
+      "log_sha256": "1ba03ad4f0b044bc5c3893fd04fa853d8f6afe0b0cdb9953413ef4aeb98329a4"
+    }
+  },
+  "tests": {
+    "observed_pose_tests": 3,
+    "passed": true
+  }
+}
