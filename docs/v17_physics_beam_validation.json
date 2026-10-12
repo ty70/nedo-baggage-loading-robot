@@ -1,0 +1,1334 @@
+{
+  "provenance": {
+    "base_commit": "60fb498ef2318c224793e31258dec097b7de8514",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "module_path": "agents/search_cand_v17_physics_beam/",
+    "profile": {
+      "PYTHONUNBUFFERED": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "EP_CPP_MODE": "cpp",
+      "SC_SEARCH_TRIALS": "16",
+      "SC_SEARCH_MAX_SECONDS": "60",
+      "SC_FEASIBILITY_BEAM": "12",
+      "SC_FEASIBILITY_BRANCH": "8"
+    },
+    "manifest_sha256": "8f4867fde6cfdc9100281afb5ccc2c04baf2b9a83f236d23df9dae3798b068e0",
+    "limitations": "Local fill_score and packed ratio only; no hidden contest score. Synthetic holdout is observed once for frozen baseline.",
+    "source_hashes": {
+      "scripts/benchmark_robustness.py": "760ab9a0fb22993fc2a8f4a131e5e63061361f930aa29fbb5c98851718742c3e",
+      "scripts/generate_robustness_cases.py": "47572fb70c0f88067f4ebc4a5a2fce1b39e58941bb7905a0e7a29fb62bd75b77",
+      "scripts/run_robustness_case.py": "3a19c11e19efbf1ed5478fb873769c14086d9afff493b5376f8b0e24ff0584f6",
+      "scripts/test_robustness_cases.py": "498bed82025e5814e76054ee06241ccf3b011027d2556af0ebe1f639c055183b"
+    }
+  },
+  "summary": {
+    "split": {
+      "development": {
+        "cases": 4,
+        "evaluation_ok": 4,
+        "errors": 0,
+        "mean_fill_score": 12.322275612512277,
+        "mean_placed_ratio": 0.20541158536585366,
+        "minimum_placed_ratio": 0.14634146341463414,
+        "complete_cases": 0,
+        "stop_reasons": {
+          "no_plan_safe_abort": 4
+        }
+      }
+    },
+    "group": {
+      "load": {
+        "cases": 1,
+        "evaluation_ok": 1,
+        "errors": 0,
+        "mean_fill_score": 6.391112099204586,
+        "mean_placed_ratio": 0.1875,
+        "minimum_placed_ratio": 0.1875,
+        "complete_cases": 0,
+        "stop_reasons": {
+          "no_plan_safe_abort": 1
+        }
+      },
+      "order": {
+        "cases": 2,
+        "evaluation_ok": 2,
+        "errors": 0,
+        "mean_fill_score": 16.609782539251544,
+        "mean_placed_ratio": 0.24390243902439024,
+        "minimum_placed_ratio": 0.24390243902439024,
+        "complete_cases": 0,
+        "stop_reasons": {
+          "no_plan_safe_abort": 2
+        }
+      },
+      "shelf_opening": {
+        "cases": 1,
+        "evaluation_ok": 1,
+        "errors": 0,
+        "mean_fill_score": 9.678425272341434,
+        "mean_placed_ratio": 0.14634146341463414,
+        "minimum_placed_ratio": 0.14634146341463414,
+        "complete_cases": 0,
+        "stop_reasons": {
+          "no_plan_safe_abort": 1
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "101",
+      "group": "order",
+      "split": "development",
+      "seed": 271601,
+      "source_template": "000",
+      "optimize": true,
+      "num_items": 41,
+      "num_containers": 1,
+      "nominal_volume_load": 0.6460410603819793,
+      "sha256": "02585ebb2a89b5476ae0468fab3f096466a4c2bbf5ad6dd61d539d3a50a3f3fc",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 62.50607482099986,
+      "fill_score": 16.609782539251544,
+      "placed_ratio": 0.24390243902439024,
+      "actual_packed_count": 10,
+      "initial_offline_plan_count": 8,
+      "planned_union_count": 10,
+      "stop_reason": "no_plan_safe_abort",
+      "optimization_seconds": 60.09474979700008,
+      "policy_seconds": 0.3475484979999237,
+      "timeout_messages": [],
+      "safe_abort_messages": [
+        "[search_cand_v5][SAFE-ABORT] step=11 reason=NO-PHYSICS-VALID-CANDIDATE item=27 target=(3.650,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": []
+    },
+    {
+      "id": "103",
+      "group": "order",
+      "split": "development",
+      "seed": 271603,
+      "source_template": "000",
+      "optimize": true,
+      "num_items": 41,
+      "num_containers": 1,
+      "nominal_volume_load": 0.6460410603819793,
+      "sha256": "c4f088c252a1add8494fa205828fcef6df8081b76c51608431bada865d1fcf97",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 62.71877464800036,
+      "fill_score": 16.609782539251544,
+      "placed_ratio": 0.24390243902439024,
+      "actual_packed_count": 10,
+      "initial_offline_plan_count": 8,
+      "planned_union_count": 10,
+      "stop_reason": "no_plan_safe_abort",
+      "optimization_seconds": 60.11500107200027,
+      "policy_seconds": 0.3484787420002249,
+      "timeout_messages": [],
+      "safe_abort_messages": [
+        "[search_cand_v5][SAFE-ABORT] step=11 reason=NO-PHYSICS-VALID-CANDIDATE item=36 target=(3.650,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": []
+    },
+    {
+      "id": "112",
+      "group": "load",
+      "split": "development",
+      "seed": 291602,
+      "source_template": "001",
+      "optimize": false,
+      "num_items": 32,
+      "num_containers": 1,
+      "nominal_volume_load": 0.4942623190667552,
+      "sha256": "ab7a86236cbd48bf8879d190a5d07fc60961d450bd008ee4a96d0ff009c7214b",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 11.748242765999748,
+      "fill_score": 6.391112099204586,
+      "placed_ratio": 0.1875,
+      "actual_packed_count": 6,
+      "initial_offline_plan_count": null,
+      "planned_union_count": 6,
+      "stop_reason": "no_plan_safe_abort",
+      "optimization_seconds": 0,
+      "policy_seconds": 2.049102234000202,
+      "timeout_messages": [],
+      "safe_abort_messages": [
+        "[search_cand_v5][SAFE-ABORT] step=7 reason=NO-PHYSICS-VALID-CANDIDATE item=1 target=(3.650,0.000,0.810) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": []
+    },
+    {
+      "id": "123",
+      "group": "shelf_opening",
+      "split": "development",
+      "seed": 311603,
+      "source_template": "000",
+      "optimize": true,
+      "num_items": 41,
+      "num_containers": 1,
+      "nominal_volume_load": 0.6585025853824584,
+      "sha256": "e8ecdef6eeca069832ce2f1eb16c3335635e6cf0587e681fc496782e7d749553",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 61.046648996999465,
+      "fill_score": 9.678425272341434,
+      "placed_ratio": 0.14634146341463414,
+      "actual_packed_count": 6,
+      "initial_offline_plan_count": 6,
+      "planned_union_count": 6,
+      "stop_reason": "no_plan_safe_abort",
+      "optimization_seconds": 60.004804619000424,
+      "policy_seconds": 0.11365540299993881,
+      "timeout_messages": [],
+      "safe_abort_messages": [
+        "[search_cand_v5][SAFE-ABORT] step=7 reason=NO-PHYSICS-VALID-CANDIDATE item=11 target=(3.650,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": []
+    }
+  ],
+  "baseline": [
+    {
+      "id": "101",
+      "group": "order",
+      "split": "development",
+      "seed": 271601,
+      "source_template": "000",
+      "optimize": true,
+      "num_items": 41,
+      "num_containers": 1,
+      "nominal_volume_load": 0.6460410603819793,
+      "sha256": "02585ebb2a89b5476ae0468fab3f096466a4c2bbf5ad6dd61d539d3a50a3f3fc",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 51.83567299200013,
+      "fill_score": 26.45885575556229,
+      "placed_ratio": 0.5365853658536586,
+      "actual_packed_count": 22,
+      "initial_offline_plan_count": 22,
+      "planned_union_count": 22,
+      "stop_reason": "no_plan_safe_abort",
+      "optimization_seconds": 48.26562471299985,
+      "policy_seconds": 0.010060509000140883,
+      "timeout_messages": [],
+      "safe_abort_messages": [
+        "[search_cand_v5][SAFE-ABORT] step=23 reason=NO-BPP-PLAN-AFTER-REPLAN item=22 target=(3.750,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": [],
+      "evaluation_excluded_item_ids": [
+        6,
+        7,
+        9,
+        12,
+        19,
+        25,
+        32
+      ]
+    },
+    {
+      "id": "103",
+      "group": "order",
+      "split": "development",
+      "seed": 271603,
+      "source_template": "000",
+      "optimize": true,
+      "num_items": 41,
+      "num_containers": 1,
+      "nominal_volume_load": 0.6460410603819793,
+      "sha256": "c4f088c252a1add8494fa205828fcef6df8081b76c51608431bada865d1fcf97",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 52.98656470200012,
+      "fill_score": 31.175005789902396,
+      "placed_ratio": 0.6341463414634146,
+      "actual_packed_count": 26,
+      "initial_offline_plan_count": 31,
+      "planned_union_count": 31,
+      "stop_reason": "transport_rejected",
+      "optimization_seconds": 48.321397895000246,
+      "policy_seconds": 0.00487361699970279,
+      "timeout_messages": [],
+      "safe_abort_messages": [],
+      "collision_messages": [
+        "collision: 37 and 14 at (np.float32(-0.255), np.float32(-0.5474324), np.float32(0.98899996)), distance 0.014981444607188315"
+      ],
+      "placed_but_unplanned_ids": [],
+      "evaluation_excluded_item_ids": [
+        10,
+        24,
+        27,
+        29,
+        35,
+        38
+      ]
+    },
+    {
+      "id": "112",
+      "group": "load",
+      "split": "development",
+      "seed": 291602,
+      "source_template": "001",
+      "optimize": false,
+      "num_items": 32,
+      "num_containers": 1,
+      "nominal_volume_load": 0.4942623190667552,
+      "sha256": "ab7a86236cbd48bf8879d190a5d07fc60961d450bd008ee4a96d0ff009c7214b",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 2.4700277639999513,
+      "fill_score": 13.760436737315352,
+      "placed_ratio": 0.46875,
+      "actual_packed_count": 15,
+      "initial_offline_plan_count": null,
+      "planned_union_count": 18,
+      "stop_reason": "settling_rejected",
+      "optimization_seconds": 0,
+      "policy_seconds": 0.0766934759999458,
+      "timeout_messages": [],
+      "safe_abort_messages": [],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": [],
+      "evaluation_excluded_item_ids": [
+        0,
+        1,
+        2,
+        5,
+        6,
+        8
+      ]
+    },
+    {
+      "id": "123",
+      "group": "shelf_opening",
+      "split": "development",
+      "seed": 311603,
+      "source_template": "000",
+      "optimize": true,
+      "num_items": 41,
+      "num_containers": 1,
+      "nominal_volume_load": 0.6585025853824584,
+      "sha256": "e8ecdef6eeca069832ce2f1eb16c3335635e6cf0587e681fc496782e7d749553",
+      "evaluation_ok": true,
+      "exit_code": 0,
+      "wall_seconds": 54.6461176089997,
+      "fill_score": 16.730016182467153,
+      "placed_ratio": 0.36585365853658536,
+      "actual_packed_count": 15,
+      "initial_offline_plan_count": 25,
+      "planned_union_count": 25,
+      "stop_reason": "inclusion_rejected",
+      "optimization_seconds": 52.527677993,
+      "policy_seconds": 0.00562208900009864,
+      "timeout_messages": [],
+      "safe_abort_messages": [],
+      "collision_messages": [],
+      "placed_but_unplanned_ids": [],
+      "evaluation_excluded_item_ids": [
+        5,
+        9,
+        11,
+        19,
+        20,
+        22,
+        39
+      ]
+    }
+  ],
+  "original_reference": {
+    "evaluation": {
+      "000": {
+        "evaluation": {
+          "fill_score": 16.609782539251544,
+          "num_placed_items": 0.24390243902439024
+        },
+        "message": "ok",
+        "status": "success",
+        "place_states": {
+          "is_included": false,
+          "is_valid": false,
+          "is_placed_safe": false
+        },
+        "time_results": {
+          "optimization": 60.127377871000135,
+          "policy": 0.37067399399984424
+        }
+      },
+      "001": {
+        "evaluation": {
+          "fill_score": 6.221283533422263,
+          "num_placed_items": 0.14285714285714285
+        },
+        "message": "ok",
+        "status": "success",
+        "place_states": {
+          "is_included": false,
+          "is_valid": false,
+          "is_placed_safe": false
+        },
+        "time_results": {
+          "optimization": 0,
+          "policy": 2.0494784290003736
+        }
+      }
+    },
+    "runtime": {
+      "wall_seconds": 74.46640227200078,
+      "exit_code": 0,
+      "task_ids": [
+        "000",
+        "001"
+      ],
+      "error_tasks": [],
+      "missing_tasks": [],
+      "checker": "/workspace/scratch/6f7f5f4f51db/robustness_state/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+    }
+  },
+  "evidence": {
+    "101": {
+      "evaluation": {
+        "101": {
+          "evaluation": {
+            "fill_score": 16.609782539251544,
+            "num_placed_items": 0.24390243902439024
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": false,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 60.09474979700008,
+            "policy": 0.3475484979999237
+          }
+        }
+      },
+      "runtime": {
+        "wall_seconds": 62.3069050590002,
+        "exit_code": 0,
+        "error_tasks": [],
+        "missing_tasks": [],
+        "checker": "/workspace/scratch/6f7f5f4f51db/robustness_state/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+      },
+      "physics": {
+        "stats": {
+          "attempted": 857,
+          "transport_rejected": 6,
+          "settling_rejected": 0,
+          "accepted": 851
+        },
+        "trace": [
+          {
+            "item_id": 14,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 14",
+              "collision: 14 and 12 at (-0.385, np.float32(-0.31879628), np.float32(1.094)), distance 0.013307521280269278",
+              "item 14 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6600000262260437,
+              0.3449999988079071,
+              1.093999981880188
+            ]
+          },
+          {
+            "item_id": 14,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 14",
+              "collision: 14 and 12 at (-0.385, np.float32(-0.21932203), np.float32(1.194)), distance 0.013833270000580393",
+              "item 14 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6600000262260437,
+              0.4449999928474426,
+              1.194000005722046
+            ]
+          },
+          {
+            "item_id": 15,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 15",
+              "collision: 15 and 12 at (-0.385, np.float32(-0.31879628), np.float32(1.094)), distance 0.013257788552987003",
+              "item 15 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6600000262260437,
+              0.3449999988079071,
+              1.093999981880188
+            ]
+          },
+          {
+            "item_id": 15,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 15",
+              "collision: 15 and 12 at (-0.385, np.float32(-0.21932203), np.float32(1.194)), distance 0.01378353724541003",
+              "item 15 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6600000262260437,
+              0.4449999928474426,
+              1.194000005722046
+            ]
+          },
+          {
+            "item_id": 27,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 27",
+              "collision: 27 and 12 at (-0.385, np.float32(-0.31879628), np.float32(1.094)), distance 0.0131965283277381",
+              "collision: 27 and 15 at (-0.385, np.float32(-0.31879628), np.float32(1.094)), distance 0.013182101774846001",
+              "item 27 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6600000262260437,
+              0.3449999988079071,
+              1.093999981880188
+            ]
+          },
+          {
+            "item_id": 27,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 27",
+              "collision: 27 and 12 at (-0.385, np.float32(-0.21932203), np.float32(1.194)), distance 0.01372227699847848",
+              "collision: 27 and 15 at (-0.385, np.float32(-0.21932203), np.float32(1.194)), distance 0.013707850503487355",
+              "item 27 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6600000262260437,
+              0.4449999928474426,
+              1.194000005722046
+            ]
+          }
+        ],
+        "validator": {
+          "angle_displacement_threshold": 45,
+          "ceiling_margin": 0.018,
+          "displacement_threshold": 0.3,
+          "inclusion_margin": -0.005,
+          "safety_margin": 0.015,
+          "settle_wait_step": 300,
+          "start_z": 0.08
+        },
+        "limitations": "Reconstructed pose/velocity scene; no contact warm-start cache, observations lack velocity."
+      },
+      "log_lines": [
+        "[V17-BEAM] trial=1 packed=8 elapsed=60.091s",
+        "[V17-ORDER] order=[19, 22, 39, 30, 3, 6, 10, 12, 14, 15, 27, 32, 38, 0, 1, 4, 7, 8, 9, 11, 13, 25, 26, 28, 31, 23, 24, 21, 5, 34, 36, 40, 17, 18, 2, 16, 33, 35, 20, 37, 29] stats={'attempted': 847, 'transport_rejected': 0, 'settling_rejected': 0, 'accepted': 847}",
+        "[V17-RUNTIME-REPLAN] item=14 target=(0.6210373640060425, 0.44525203108787537, 1.2079154253005981)",
+        "[V17-RUNTIME-REPLAN] item=15 target=(-0.1698673963546753, 0.3444288372993469, 1.2079051733016968)",
+        "[search_cand_v5][SAFE-ABORT] step=11 reason=NO-PHYSICS-VALID-CANDIDATE item=27 target=(3.650,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ]
+    },
+    "103": {
+      "evaluation": {
+        "103": {
+          "evaluation": {
+            "fill_score": 16.609782539251544,
+            "num_placed_items": 0.24390243902439024
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": false,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 60.11500107200027,
+            "policy": 0.3484787420002249
+          }
+        }
+      },
+      "runtime": {
+        "wall_seconds": 62.53392623499985,
+        "exit_code": 0,
+        "error_tasks": [],
+        "missing_tasks": [],
+        "checker": "/workspace/scratch/6f7f5f4f51db/robustness_state/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+      },
+      "physics": {
+        "stats": {
+          "attempted": 868,
+          "transport_rejected": 6,
+          "settling_rejected": 0,
+          "accepted": 862
+        },
+        "trace": [
+          {
+            "item_id": 27,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 27",
+              "collision: 27 and 20 at (-0.385, np.float32(-0.31879628), np.float32(1.094)), distance 0.014010120542433288",
+              "item 27 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6600000262260437,
+              0.3449999988079071,
+              1.093999981880188
+            ]
+          },
+          {
+            "item_id": 27,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 27",
+              "collision: 27 and 20 at (-0.385, np.float32(-0.21932203), np.float32(1.194)), distance 0.014535869272231825",
+              "item 27 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6600000262260437,
+              0.4449999928474426,
+              1.194000005722046
+            ]
+          },
+          {
+            "item_id": 29,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 29",
+              "collision: 29 and 20 at (-0.385, np.float32(-0.31879628), np.float32(1.094)), distance 0.014190361997607348",
+              "item 29 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6600000262260437,
+              0.3449999988079071,
+              1.093999981880188
+            ]
+          },
+          {
+            "item_id": 29,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 29",
+              "collision: 29 and 20 at (-0.385, np.float32(-0.21932203), np.float32(1.194)), distance 0.014716110727437086",
+              "item 29 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6600000262260437,
+              0.4449999928474426,
+              1.194000005722046
+            ]
+          },
+          {
+            "item_id": 36,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 36",
+              "collision: 36 and 20 at (-0.385, np.float32(-0.31879628), np.float32(1.094)), distance 0.014282801707978411",
+              "collision: 36 and 29 at (-0.385, np.float32(-0.31879628), np.float32(1.094)), distance 0.014407975125873653",
+              "item 36 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6600000262260437,
+              0.3449999988079071,
+              1.093999981880188
+            ]
+          },
+          {
+            "item_id": 36,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 36",
+              "collision: 36 and 20 at (-0.385, np.float32(-0.21932203), np.float32(1.194)), distance 0.01480855043768422",
+              "collision: 36 and 29 at (-0.385, np.float32(-0.21932203), np.float32(1.194)), distance 0.014932931419930373",
+              "item 36 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6600000262260437,
+              0.4449999928474426,
+              1.194000005722046
+            ]
+          }
+        ],
+        "validator": {
+          "angle_displacement_threshold": 45,
+          "ceiling_margin": 0.018,
+          "displacement_threshold": 0.3,
+          "inclusion_margin": -0.005,
+          "safety_margin": 0.015,
+          "settle_wait_step": 300,
+          "start_z": 0.08
+        },
+        "limitations": "Reconstructed pose/velocity scene; no contact warm-start cache, observations lack velocity."
+      },
+      "log_lines": [
+        "[V17-BEAM] trial=1 packed=8 elapsed=60.111s",
+        "[V17-ORDER] order=[11, 13, 26, 34, 0, 9, 10, 20, 27, 29, 36, 38, 39, 3, 6, 12, 15, 16, 22, 24, 28, 31, 33, 35, 40, 14, 17, 30, 1, 2, 4, 19, 5, 25, 8, 18, 21, 37, 7, 23, 32] stats={'attempted': 858, 'transport_rejected': 0, 'settling_rejected': 0, 'accepted': 858}",
+        "[V17-RUNTIME-REPLAN] item=27 target=(0.6210373640060425, 0.44525203108787537, 1.2079154253005981)",
+        "[V17-RUNTIME-REPLAN] item=29 target=(-0.1692405492067337, 0.3455197215080261, 1.2078791856765747)",
+        "[search_cand_v5][SAFE-ABORT] step=11 reason=NO-PHYSICS-VALID-CANDIDATE item=36 target=(3.650,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ]
+    },
+    "112": {
+      "evaluation": {
+        "112": {
+          "evaluation": {
+            "fill_score": 6.391112099204586,
+            "num_placed_items": 0.1875
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": false,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 0,
+            "policy": 2.049102234000202
+          }
+        }
+      },
+      "runtime": {
+        "wall_seconds": 11.535981053000796,
+        "exit_code": 0,
+        "error_tasks": [],
+        "missing_tasks": [],
+        "checker": "/workspace/scratch/6f7f5f4f51db/robustness_state/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+      },
+      "physics": {
+        "stats": {
+          "attempted": 267,
+          "transport_rejected": 5,
+          "settling_rejected": 0,
+          "accepted": 262
+        },
+        "trace": [
+          {
+            "item_id": 3,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 3",
+              "collision: 3 and 8 at (np.float32(-0.37969705), np.float32(0.47000265), np.float32(1.4515)), distance 0.013370672551351962",
+              "item 3 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6850010752677917,
+              0.470002681016922,
+              1.442975640296936
+            ]
+          },
+          {
+            "item_id": 3,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 3",
+              "collision: 3 and 11 at (np.float32(-0.37969705), np.float32(0.47000265), np.float32(1.4515)), distance 0.013370672551351962",
+              "item 3 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6850010752677917,
+              0.470002681016922,
+              1.442975640296936
+            ]
+          },
+          {
+            "item_id": 3,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 3",
+              "collision: 3 and 12 at (np.float32(-0.37969705), np.float32(0.47000265), np.float32(1.4515)), distance 0.013370672551351962",
+              "item 3 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6850010752677917,
+              0.470002681016922,
+              1.442975640296936
+            ]
+          },
+          {
+            "item_id": 3,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 3",
+              "collision: 3 and 13 at (np.float32(-0.37969705), np.float32(0.47000265), np.float32(1.4515)), distance 0.013370672551351962",
+              "item 3 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6850010752677917,
+              0.470002681016922,
+              1.442975640296936
+            ]
+          },
+          {
+            "item_id": 3,
+            "included": true,
+            "transported": false,
+            "settled": false,
+            "messages": [
+              "transport item 3",
+              "collision: 3 and 8 at (np.float32(-0.37969705), np.float32(0.47000265), np.float32(1.4515)), distance 0.013370672551352013",
+              "item 3 not packable. removed."
+            ],
+            "phase": "search",
+            "execution": [
+              -0.6850010752677917,
+              0.470002681016922,
+              1.442975640296936
+            ]
+          }
+        ],
+        "validator": {
+          "angle_displacement_threshold": 45,
+          "ceiling_margin": 0.018,
+          "displacement_threshold": 0.3,
+          "inclusion_margin": -0.005,
+          "safety_margin": 0.015,
+          "settle_wait_step": 300,
+          "start_z": 0.08
+        },
+        "limitations": "Reconstructed pose/velocity scene; no contact warm-start cache, observations lack velocity."
+      },
+      "log_lines": [
+        "[V17-RUNTIME-REPLAN] item=0 target=(0.6100000143051147, 0.4699999988079071, 0.1899999976158142)",
+        "[V17-RUNTIME-REPLAN] item=2 target=(-0.18000000715255737, 0.4699999988079071, 0.1899999976158142)",
+        "[V17-RUNTIME-REPLAN] item=9 target=(-0.10451579093933105, 0.49709174036979675, 0.5029875636100769)",
+        "[V17-RUNTIME-REPLAN] item=5 target=(0.6111979484558105, 0.4700940251350403, 0.427988737821579)",
+        "[V17-RUNTIME-REPLAN] item=4 target=(-0.7350000143051147, 0.41999998688697815, 1.003999948501587)",
+        "[V17-RUNTIME-REPLAN] item=8 target=(-0.7350000143051147, 0.41999998688697815, 1.2229900360107422)",
+        "[search_cand_v5][SAFE-ABORT] step=7 reason=NO-PHYSICS-VALID-CANDIDATE item=1 target=(3.650,0.000,0.810) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ]
+    },
+    "123": {
+      "evaluation": {
+        "123": {
+          "evaluation": {
+            "fill_score": 9.678425272341434,
+            "num_placed_items": 0.14634146341463414
+          },
+          "message": "ok",
+          "status": "success",
+          "place_states": {
+            "is_included": false,
+            "is_valid": false,
+            "is_placed_safe": false
+          },
+          "time_results": {
+            "optimization": 60.004804619000424,
+            "policy": 0.11365540299993881
+          }
+        }
+      },
+      "runtime": {
+        "wall_seconds": 60.846573842,
+        "exit_code": 0,
+        "error_tasks": [],
+        "missing_tasks": [],
+        "checker": "/workspace/scratch/6f7f5f4f51db/robustness_state/checker/cpp_aabb_checker.cpython-312-x86_64-linux-gnu.so"
+      },
+      "physics": {
+        "stats": {
+          "attempted": 1134,
+          "transport_rejected": 0,
+          "settling_rejected": 0,
+          "accepted": 1134
+        },
+        "trace": [],
+        "validator": {
+          "angle_displacement_threshold": 45,
+          "ceiling_margin": 0.018,
+          "displacement_threshold": 0.3,
+          "inclusion_margin": -0.005,
+          "safety_margin": 0.015,
+          "settle_wait_step": 300,
+          "start_z": 0.08
+        },
+        "limitations": "Reconstructed pose/velocity scene; no contact warm-start cache, observations lack velocity."
+      },
+      "log_lines": [
+        "[V17-BEAM] trial=1 packed=6 elapsed=33.715s",
+        "[V17-BEAM] trial=2 packed=6 elapsed=60.001s",
+        "[V17-ORDER] order=[3, 17, 21, 33, 5, 9, 11, 19, 20, 22, 23, 35, 39, 0, 4, 6, 10, 12, 18, 24, 27, 29, 32, 36, 38, 8, 13, 30, 16, 31, 34, 40, 1, 28, 15, 25, 26, 37, 2, 7, 14] stats={'attempted': 1134, 'transport_rejected': 0, 'settling_rejected': 0, 'accepted': 1134}",
+        "[search_cand_v5][SAFE-ABORT] step=7 reason=NO-PHYSICS-VALID-CANDIDATE item=11 target=(3.650,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+      ]
+    }
+  },
+  "development_iterations": [
+    {
+      "description": "Initial fixed order and 3 candidate placements; deprecated prototype, agent hash not retained",
+      "report": {
+        "provenance": {
+          "base_commit": "60fb498ef2318c224793e31258dec097b7de8514",
+          "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+          "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+          "module_path": "agents/search_cand_v17_physics_beam/",
+          "profile": {
+            "PYTHONUNBUFFERED": "1",
+            "PYTHONDONTWRITEBYTECODE": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "OMP_NUM_THREADS": "1",
+            "EP_CPP_MODE": "cpp",
+            "SC_SEARCH_TRIALS": "16",
+            "SC_SEARCH_MAX_SECONDS": "60",
+            "SC_FEASIBILITY_BEAM": "12",
+            "SC_FEASIBILITY_BRANCH": "8"
+          },
+          "manifest_sha256": "8f4867fde6cfdc9100281afb5ccc2c04baf2b9a83f236d23df9dae3798b068e0",
+          "limitations": "Local fill_score and packed ratio only; no hidden contest score. Synthetic holdout is observed once for frozen baseline.",
+          "source_hashes": {
+            "scripts/benchmark_robustness.py": "760ab9a0fb22993fc2a8f4a131e5e63061361f930aa29fbb5c98851718742c3e",
+            "scripts/generate_robustness_cases.py": "47572fb70c0f88067f4ebc4a5a2fce1b39e58941bb7905a0e7a29fb62bd75b77",
+            "scripts/run_robustness_case.py": "3a19c11e19efbf1ed5478fb873769c14086d9afff493b5376f8b0e24ff0584f6",
+            "scripts/test_robustness_cases.py": "498bed82025e5814e76054ee06241ccf3b011027d2556af0ebe1f639c055183b"
+          }
+        },
+        "summary": {
+          "split": {
+            "development": {
+              "cases": 4,
+              "evaluation_ok": 4,
+              "errors": 0,
+              "mean_fill_score": 5.765791509220346,
+              "mean_placed_ratio": 0.09051067073170732,
+              "minimum_placed_ratio": 0.07317073170731707,
+              "complete_cases": 0,
+              "stop_reasons": {
+                "no_plan_safe_abort": 4
+              }
+            }
+          },
+          "group": {
+            "load": {
+              "cases": 1,
+              "evaluation_ok": 1,
+              "errors": 0,
+              "mean_fill_score": 3.612716763005781,
+              "mean_placed_ratio": 0.09375,
+              "minimum_placed_ratio": 0.09375,
+              "complete_cases": 0,
+              "stop_reasons": {
+                "no_plan_safe_abort": 1
+              }
+            },
+            "order": {
+              "cases": 2,
+              "evaluation_ok": 2,
+              "errors": 0,
+              "mean_fill_score": 6.783170151256209,
+              "mean_placed_ratio": 0.0975609756097561,
+              "minimum_placed_ratio": 0.0975609756097561,
+              "complete_cases": 0,
+              "stop_reasons": {
+                "no_plan_safe_abort": 2
+              }
+            },
+            "shelf_opening": {
+              "cases": 1,
+              "evaluation_ok": 1,
+              "errors": 0,
+              "mean_fill_score": 5.884108971363188,
+              "mean_placed_ratio": 0.07317073170731707,
+              "minimum_placed_ratio": 0.07317073170731707,
+              "complete_cases": 0,
+              "stop_reasons": {
+                "no_plan_safe_abort": 1
+              }
+            }
+          }
+        },
+        "cases": [
+          {
+            "id": "101",
+            "group": "order",
+            "split": "development",
+            "seed": 271601,
+            "source_template": "000",
+            "optimize": true,
+            "num_items": 41,
+            "num_containers": 1,
+            "nominal_volume_load": 0.6460410603819793,
+            "sha256": "02585ebb2a89b5476ae0468fab3f096466a4c2bbf5ad6dd61d539d3a50a3f3fc",
+            "evaluation_ok": true,
+            "exit_code": 0,
+            "wall_seconds": 7.337889349999841,
+            "fill_score": 6.783170151256209,
+            "placed_ratio": 0.0975609756097561,
+            "actual_packed_count": 4,
+            "initial_offline_plan_count": null,
+            "planned_union_count": 4,
+            "stop_reason": "no_plan_safe_abort",
+            "optimization_seconds": 6.491286605000369,
+            "policy_seconds": 0.07589921999988292,
+            "timeout_messages": [],
+            "safe_abort_messages": [
+              "[search_cand_v5][SAFE-ABORT] step=5 reason=NO-PHYSICS-VALID-CANDIDATE item=39 target=(3.750,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+            ],
+            "collision_messages": [],
+            "placed_but_unplanned_ids": []
+          },
+          {
+            "id": "103",
+            "group": "order",
+            "split": "development",
+            "seed": 271603,
+            "source_template": "000",
+            "optimize": true,
+            "num_items": 41,
+            "num_containers": 1,
+            "nominal_volume_load": 0.6460410603819793,
+            "sha256": "c4f088c252a1add8494fa205828fcef6df8081b76c51608431bada865d1fcf97",
+            "evaluation_ok": true,
+            "exit_code": 0,
+            "wall_seconds": 6.885280609999882,
+            "fill_score": 6.783170151256209,
+            "placed_ratio": 0.0975609756097561,
+            "actual_packed_count": 4,
+            "initial_offline_plan_count": null,
+            "planned_union_count": 4,
+            "stop_reason": "no_plan_safe_abort",
+            "optimization_seconds": 6.211004643000251,
+            "policy_seconds": 0.07276726000009148,
+            "timeout_messages": [],
+            "safe_abort_messages": [
+              "[search_cand_v5][SAFE-ABORT] step=5 reason=NO-PHYSICS-VALID-CANDIDATE item=34 target=(3.750,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+            ],
+            "collision_messages": [],
+            "placed_but_unplanned_ids": []
+          },
+          {
+            "id": "112",
+            "group": "load",
+            "split": "development",
+            "seed": 291602,
+            "source_template": "001",
+            "optimize": false,
+            "num_items": 32,
+            "num_containers": 1,
+            "nominal_volume_load": 0.4942623190667552,
+            "sha256": "ab7a86236cbd48bf8879d190a5d07fc60961d450bd008ee4a96d0ff009c7214b",
+            "evaluation_ok": true,
+            "exit_code": 0,
+            "wall_seconds": 1.4178790739997567,
+            "fill_score": 3.612716763005781,
+            "placed_ratio": 0.09375,
+            "actual_packed_count": 3,
+            "initial_offline_plan_count": null,
+            "planned_union_count": 3,
+            "stop_reason": "no_plan_safe_abort",
+            "optimization_seconds": 0,
+            "policy_seconds": 0.5270266370002901,
+            "timeout_messages": [],
+            "safe_abort_messages": [
+              "[search_cand_v5][SAFE-ABORT] step=4 reason=NO-PHYSICS-VALID-CANDIDATE item=1 target=(3.650,0.000,0.810) expected=INCLUSION-REJECT-NO-TRANSPORT"
+            ],
+            "collision_messages": [],
+            "placed_but_unplanned_ids": []
+          },
+          {
+            "id": "123",
+            "group": "shelf_opening",
+            "split": "development",
+            "seed": 311603,
+            "source_template": "000",
+            "optimize": true,
+            "num_items": 41,
+            "num_containers": 1,
+            "nominal_volume_load": 0.6585025853824584,
+            "sha256": "e8ecdef6eeca069832ce2f1eb16c3335635e6cf0587e681fc496782e7d749553",
+            "evaluation_ok": true,
+            "exit_code": 0,
+            "wall_seconds": 2.0699235899996893,
+            "fill_score": 5.884108971363188,
+            "placed_ratio": 0.07317073170731707,
+            "actual_packed_count": 3,
+            "initial_offline_plan_count": null,
+            "planned_union_count": 3,
+            "stop_reason": "no_plan_safe_abort",
+            "optimization_seconds": 1.4772268080000686,
+            "policy_seconds": 0.054378806999920926,
+            "timeout_messages": [],
+            "safe_abort_messages": [
+              "[search_cand_v5][SAFE-ABORT] step=4 reason=NO-PHYSICS-VALID-CANDIDATE item=33 target=(3.750,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+            ],
+            "collision_messages": [],
+            "placed_but_unplanned_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "description": "Insertion-order branching, beam4/window4/pool12; deprecated prototype",
+      "agent_sha256": "c8450919805c8a0939880d0812c93f2f301de61a7cda066cf9591762d1bcd65d",
+      "report": {
+        "provenance": {
+          "base_commit": "60fb498ef2318c224793e31258dec097b7de8514",
+          "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+          "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+          "module_path": "agents/search_cand_v17_physics_beam/",
+          "profile": {
+            "PYTHONUNBUFFERED": "1",
+            "PYTHONDONTWRITEBYTECODE": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "OMP_NUM_THREADS": "1",
+            "EP_CPP_MODE": "cpp",
+            "SC_SEARCH_TRIALS": "16",
+            "SC_SEARCH_MAX_SECONDS": "60",
+            "SC_FEASIBILITY_BEAM": "12",
+            "SC_FEASIBILITY_BRANCH": "8"
+          },
+          "manifest_sha256": "8f4867fde6cfdc9100281afb5ccc2c04baf2b9a83f236d23df9dae3798b068e0",
+          "limitations": "Local fill_score and packed ratio only; no hidden contest score. Synthetic holdout is observed once for frozen baseline.",
+          "source_hashes": {
+            "scripts/benchmark_robustness.py": "760ab9a0fb22993fc2a8f4a131e5e63061361f930aa29fbb5c98851718742c3e",
+            "scripts/generate_robustness_cases.py": "47572fb70c0f88067f4ebc4a5a2fce1b39e58941bb7905a0e7a29fb62bd75b77",
+            "scripts/run_robustness_case.py": "3a19c11e19efbf1ed5478fb873769c14086d9afff493b5376f8b0e24ff0584f6",
+            "scripts/test_robustness_cases.py": "498bed82025e5814e76054ee06241ccf3b011027d2556af0ebe1f639c055183b"
+          }
+        },
+        "summary": {
+          "split": {
+            "development": {
+              "cases": 4,
+              "evaluation_ok": 4,
+              "errors": 0,
+              "mean_fill_score": 10.454876170438991,
+              "mean_placed_ratio": 0.18102134146341464,
+              "minimum_placed_ratio": 0.14634146341463414,
+              "complete_cases": 0,
+              "stop_reasons": {
+                "no_plan_safe_abort": 4
+              }
+            }
+          },
+          "group": {
+            "load": {
+              "cases": 1,
+              "evaluation_ok": 1,
+              "errors": 0,
+              "mean_fill_score": 6.221283533422263,
+              "mean_placed_ratio": 0.1875,
+              "minimum_placed_ratio": 0.1875,
+              "complete_cases": 0,
+              "stop_reasons": {
+                "no_plan_safe_abort": 1
+              }
+            },
+            "order": {
+              "cases": 2,
+              "evaluation_ok": 2,
+              "errors": 0,
+              "mean_fill_score": 12.959897937996134,
+              "mean_placed_ratio": 0.1951219512195122,
+              "minimum_placed_ratio": 0.1951219512195122,
+              "complete_cases": 0,
+              "stop_reasons": {
+                "no_plan_safe_abort": 2
+              }
+            },
+            "shelf_opening": {
+              "cases": 1,
+              "evaluation_ok": 1,
+              "errors": 0,
+              "mean_fill_score": 9.678425272341434,
+              "mean_placed_ratio": 0.14634146341463414,
+              "minimum_placed_ratio": 0.14634146341463414,
+              "complete_cases": 0,
+              "stop_reasons": {
+                "no_plan_safe_abort": 1
+              }
+            }
+          }
+        },
+        "cases": [
+          {
+            "id": "101",
+            "group": "order",
+            "split": "development",
+            "seed": 271601,
+            "source_template": "000",
+            "optimize": true,
+            "num_items": 41,
+            "num_containers": 1,
+            "nominal_volume_load": 0.6460410603819793,
+            "sha256": "02585ebb2a89b5476ae0468fab3f096466a4c2bbf5ad6dd61d539d3a50a3f3fc",
+            "evaluation_ok": true,
+            "exit_code": 0,
+            "wall_seconds": 54.225683606000075,
+            "fill_score": 12.959897937996134,
+            "placed_ratio": 0.1951219512195122,
+            "actual_packed_count": 8,
+            "initial_offline_plan_count": 8,
+            "planned_union_count": 8,
+            "stop_reason": "no_plan_safe_abort",
+            "optimization_seconds": 52.79847681199999,
+            "policy_seconds": 0.1225179709999793,
+            "timeout_messages": [],
+            "safe_abort_messages": [
+              "[search_cand_v5][SAFE-ABORT] step=9 reason=NO-PHYSICS-VALID-CANDIDATE item=14 target=(3.650,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+            ],
+            "collision_messages": [],
+            "placed_but_unplanned_ids": []
+          },
+          {
+            "id": "103",
+            "group": "order",
+            "split": "development",
+            "seed": 271603,
+            "source_template": "000",
+            "optimize": true,
+            "num_items": 41,
+            "num_containers": 1,
+            "nominal_volume_load": 0.6460410603819793,
+            "sha256": "c4f088c252a1add8494fa205828fcef6df8081b76c51608431bada865d1fcf97",
+            "evaluation_ok": true,
+            "exit_code": 0,
+            "wall_seconds": 53.78046354699973,
+            "fill_score": 12.959897937996134,
+            "placed_ratio": 0.1951219512195122,
+            "actual_packed_count": 8,
+            "initial_offline_plan_count": 8,
+            "planned_union_count": 8,
+            "stop_reason": "no_plan_safe_abort",
+            "optimization_seconds": 52.4452459019999,
+            "policy_seconds": 0.12377380699945206,
+            "timeout_messages": [],
+            "safe_abort_messages": [
+              "[search_cand_v5][SAFE-ABORT] step=9 reason=NO-PHYSICS-VALID-CANDIDATE item=27 target=(3.650,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+            ],
+            "collision_messages": [],
+            "placed_but_unplanned_ids": []
+          },
+          {
+            "id": "112",
+            "group": "load",
+            "split": "development",
+            "seed": 291602,
+            "source_template": "001",
+            "optimize": false,
+            "num_items": 32,
+            "num_containers": 1,
+            "nominal_volume_load": 0.4942623190667552,
+            "sha256": "ab7a86236cbd48bf8879d190a5d07fc60961d450bd008ee4a96d0ff009c7214b",
+            "evaluation_ok": true,
+            "exit_code": 0,
+            "wall_seconds": 11.804047149000326,
+            "fill_score": 6.221283533422263,
+            "placed_ratio": 0.1875,
+            "actual_packed_count": 6,
+            "initial_offline_plan_count": null,
+            "planned_union_count": 6,
+            "stop_reason": "no_plan_safe_abort",
+            "optimization_seconds": 0,
+            "policy_seconds": 2.0436387219997414,
+            "timeout_messages": [],
+            "safe_abort_messages": [
+              "[search_cand_v5][SAFE-ABORT] step=7 reason=NO-PHYSICS-VALID-CANDIDATE item=1 target=(3.650,0.000,0.810) expected=INCLUSION-REJECT-NO-TRANSPORT"
+            ],
+            "collision_messages": [],
+            "placed_but_unplanned_ids": []
+          },
+          {
+            "id": "123",
+            "group": "shelf_opening",
+            "split": "development",
+            "seed": 311603,
+            "source_template": "000",
+            "optimize": true,
+            "num_items": 41,
+            "num_containers": 1,
+            "nominal_volume_load": 0.6585025853824584,
+            "sha256": "e8ecdef6eeca069832ce2f1eb16c3335635e6cf0587e681fc496782e7d749553",
+            "evaluation_ok": true,
+            "exit_code": 0,
+            "wall_seconds": 35.024474271000145,
+            "fill_score": 9.678425272341434,
+            "placed_ratio": 0.14634146341463414,
+            "actual_packed_count": 6,
+            "initial_offline_plan_count": 6,
+            "planned_union_count": 6,
+            "stop_reason": "no_plan_safe_abort",
+            "optimization_seconds": 33.906782347000444,
+            "policy_seconds": 0.11825673899966205,
+            "timeout_messages": [],
+            "safe_abort_messages": [
+              "[search_cand_v5][SAFE-ABORT] step=7 reason=NO-PHYSICS-VALID-CANDIDATE item=11 target=(3.650,0.000,0.805) expected=INCLUSION-REJECT-NO-TRANSPORT"
+            ],
+            "collision_messages": [],
+            "placed_but_unplanned_ids": []
+          }
+        ]
+      }
+    }
+  ],
+  "final_source_sha256": {
+    "agents/search_cand_v17_physics_beam/physics_world.py": "b603ca4cacdbc2cb3cb7dec3c8cf05c8fba1c17c97f112ab032eca5d0f83a6c1",
+    "agents/search_cand_v17_physics_beam/agent.py": "712fd7e0b709434e889aadcda7992ea3ece99c2fc7fcf6bfaf191227885357ea"
+  },
+  "tests": {
+    "count": 6,
+    "passed": true
+  },
+  "limitations": [
+    "Cached v15 baseline, not contemporaneous matched-load comparison",
+    "No full 30-case evaluation",
+    "Reconstructed contact scene lacks solver warm-start cache",
+    "Initial observed velocities are unavailable and assumed zero",
+    "Local config is needed to resolve validator settings; submission compatibility unverified",
+    "No score improvement; experimental, not adopted"
+  ]
+}
